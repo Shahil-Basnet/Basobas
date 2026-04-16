@@ -34,18 +34,32 @@
 					access premium property management services.</p>
 			</div>
 
-			<form class="space-y-6">
+			<!-- Display error message if any -->
+			<%
+			String error = (String) request.getAttribute("error");
+			if (error != null && !error.isEmpty()) {
+			%>
+			<div class="error-message"
+				style="background-color: #fee2e2; color: #dc2626; padding: 12px; border-radius: 8px; margin-bottom: 20px;">
+				<%=error%>
+			</div>
+			<%
+			}
+			%>
+
+			<form class="space-y-6"
+				action="${pageContext.request.contextPath}/register" method="post">
 				<!-- Account Security Group -->
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<div class="input-group">
 						<label class="form-label">Username*</label> <input
 							class="estate-input" placeholder="unique_handle" required
-							type="text" />
+							type="text" name="username" />
 					</div>
 					<div class="input-group">
 						<label class="form-label">Email*</label> <input
 							class="estate-input" placeholder="name@domain.com" required
-							type="email" />
+							type="email" name="email" />
 					</div>
 				</div>
 
@@ -53,9 +67,20 @@
 					<label class="form-label">Password*</label>
 					<div class="password-wrapper">
 						<input class="estate-input w-full" placeholder="••••••••" required
-							type="password" id="regPassword" />
+							type="password" id="regPassword" name="password" />
 						<button class="password-toggle" type="button"
 							id="toggleRegPassword">SHOW</button>
+					</div>
+				</div>
+
+				<!-- Confirm Password Field -->
+				<div class="input-group">
+					<label class="form-label">Confirm Password*</label>
+					<div class="password-wrapper">
+						<input class="estate-input w-full" placeholder="••••••••" required
+							type="password" id="confirmPassword" name="confirmPassword" />
+						<button class="password-toggle" type="button"
+							id="toggleConfirmPassword">SHOW</button>
 					</div>
 				</div>
 
@@ -64,22 +89,24 @@
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div class="input-group">
 							<label class="form-label">Full Name</label> <input
-								class="estate-input" placeholder="Eleanor Vance" type="text" />
+								class="estate-input" placeholder="Eleanor Vance" type="text"
+								name="fullName" />
 						</div>
 						<div class="input-group">
 							<label class="form-label">Phone</label> <input
-								class="estate-input" placeholder="+1 (555) 000-0000" type="tel" />
+								class="estate-input" placeholder="+1 (555) 000-0000" type="tel"
+								name="phone" />
 						</div>
 					</div>
 
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div class="input-group">
 							<label class="form-label">Date of Birth</label> <input
-								class="estate-input" type="date" />
+								class="estate-input" type="date" name="dateOfBirth" />
 						</div>
 						<div class="input-group">
 							<label class="form-label">I am a</label> <select
-								class="estate-input">
+								class="estate-input" name="role">
 								<option value="tenant">Tenant</option>
 								<option value="landlord">Landlord</option>
 							</select>
@@ -91,8 +118,9 @@
 				<button class="btn-gradient" type="submit">Register</button>
 
 				<div class="text-center pt-2">
-					<a class="text-link text-sm" href="${pageContext.request.contextPath}/login">Already have an account?
-						<span class="link-underline">Login here</span>
+					<a class="text-link text-sm"
+						href="${pageContext.request.contextPath}/login">Already have
+						an account? <span class="link-underline">Login here</span>
 					</a>
 				</div>
 			</form>
@@ -114,6 +142,7 @@
 	</footer>
 
 	<script>
+		// Toggle password visibility for Password field
 		var regToggle = document.getElementById('toggleRegPassword');
 		var regPassword = document.getElementById('regPassword');
 		if (regToggle && regPassword) {
@@ -125,6 +154,22 @@
 										: 'password';
 								regPassword.setAttribute('type', type);
 								regToggle.textContent = type === 'password' ? 'Show'
+										: 'Hide';
+							});
+		}
+
+		// Toggle password visibility for Confirm Password field
+		var confirmToggle = document.getElementById('toggleConfirmPassword');
+		var confirmPassword = document.getElementById('confirmPassword');
+		if (confirmToggle && confirmPassword) {
+			confirmToggle
+					.addEventListener(
+							'click',
+							function() {
+								var type = confirmPassword.getAttribute('type') === 'password' ? 'text'
+										: 'password';
+								confirmPassword.setAttribute('type', type);
+								confirmToggle.textContent = type === 'password' ? 'Show'
 										: 'Hide';
 							});
 		}

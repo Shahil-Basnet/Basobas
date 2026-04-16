@@ -16,9 +16,6 @@
 	content: "⚠️";
 }
 
-.icon-visibility::before {
-	content: "👁️";
-}
 </style>
 </head>
 <body>
@@ -44,33 +41,37 @@
 					your estate with curated precision.</p>
 			</div>
 
-			<!-- Error Message (Hidden by default) -->
-			<div class="error-alert hidden" id="error-container">
-				<span class="error-icon">⚠️</span>
-				<p class="error-text">The username or password provided is
-					incorrect.</p>
-			</div>
+			<!-- Display error message if exists -->
+			<%
+				String error = (String) request.getAttribute("error");
+				if (error != null && !error.isEmpty()) {
+			%>
+				<div class="error-alert" style="background-color: #fee2e2; color: #dc2626; padding: 12px; border-radius: 8px; margin-bottom: 20px;">
+					<span class="error-icon">⚠️</span>
+					<p class="error-text" style="margin: 0; display: inline-block;"><%= error %></p>
+				</div>
+			<%
+				}
+			%>
 
-			<form class="space-y-6">
+			<form class="space-y-6" action="${pageContext.request.contextPath}/login" method="post">
 				<!-- Username Field -->
 				<div class="input-group">
-					<label class="form-label" for="username">Username</label> <input
-						class="estate-input" id="username" name="username"
-						placeholder="Enter your username" type="text" />
+					<label class="form-label" for="username">Username</label> 
+					<input class="estate-input" id="username" name="username"
+						placeholder="Enter your username" type="text" required />
 				</div>
 
 				<!-- Password Field -->
 				<div class="input-group">
 					<div class="flex justify-between items-center">
-						<label class="form-label" for="password">Password</label> <a
-							class="text-xs font-semibold text-primary hover:underline"
-							href="#">Forgot password?</a>
+						<label class="form-label" for="password">Password</label> 
+						<a class="text-xs font-semibold text-primary hover:underline" href="#">Forgot password?</a>
 					</div>
 					<div class="password-wrapper">
 						<input class="estate-input w-full" id="password" name="password"
-							placeholder="••••••••" type="password" />
-						<button class="password-toggle" type="button" id="togglePassword">
-							Show</button>
+							placeholder="••••••••" type="password" required />
+						<button class="password-toggle" type="button" id="togglePassword">Show</button>
 					</div>
 				</div>
 
@@ -95,9 +96,9 @@
 			<p class="text-sm text-on-surface-variant">© 2024 Basobas Estate
 				Management. All rights reserved.</p>
 			<nav class="flex gap-6">
-				<a class="footer-link" href="#">Privacy Policy</a> <a
-					class="footer-link" href="#">Terms of Service</a> <a
-					class="footer-link" href="#">Contact Support</a>
+				<a class="footer-link" href="#">Privacy Policy</a> 
+				<a class="footer-link" href="#">Terms of Service</a> 
+				<a class="footer-link" href="#">Contact Support</a>
 			</nav>
 		</div>
 	</footer>
