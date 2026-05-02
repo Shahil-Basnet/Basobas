@@ -93,7 +93,7 @@
 	<footer class="footer">
 		<div
 			class="flex flex-col md:flex-row justify-between items-center px-8 gap-4">
-			<p class="text-sm text-on-surface-variant">© 2024 Basobas Estate
+			<p class="text-sm text-on-surface-variant">© 2026 Basobas Estate
 				Management. All rights reserved.</p>
 			<nav class="flex gap-6">
 				<a class="footer-link" href="#">Privacy Policy</a> 
