@@ -1,0 +1,160 @@
+Folder PATH listing for volume Windows-SSD
+Volume serial number is 84FD-ED69
+C:.
+|   .classpath
+|   .project
+|   project_structure.txt
+|   
++---.settings
+|       .jsdtscope
+|       org.eclipse.core.resources.prefs
+|       org.eclipse.jdt.core.prefs
+|       org.eclipse.wst.common.component
+|       org.eclipse.wst.common.project.facet.core.xml
+|       org.eclipse.wst.jsdt.ui.superType.container
+|       org.eclipse.wst.jsdt.ui.superType.name
+|       
++---build
+|   \---classes
+|       \---com
+|           \---basobas
+|               +---config
+|               |       DatabaseConfig.class
+|               |       package-info.class
+|               |       
+|               +---controller
+|               |   |   AuthController.class
+|               |   |   package-info.class
+|               |   |   TenantDashboardController.class
+|               |   |   
+|               |   +---admin
+|               |   |       AdminDashboardController.class
+|               |   |       AdminPropertyController.class
+|               |   |       AdminUserManagementController.class
+|               |   |       package-info.class
+|               |   |       
+|               |   \---landlord
+|               |           LandlordDashboardController.class
+|               |           package-info.class
+|               |           
+|               +---dao
+|               |       package-info.class
+|               |       PropertyDAO.class
+|               |       UserDAO.class
+|               |       
+|               +---filter
+|               |       package-info.class
+|               |       
+|               +---model
+|               |       package-info.class
+|               |       Property.class
+|               |       PropertyPhoto.class
+|               |       User.class
+|               |       
+|               \---services
+|                       AuthService.class
+|                       package-info.class
+|                       
+\---src
+    \---main
+        +---java
+        |   \---com
+        |       \---basobas
+        |           +---config
+        |           |       DatabaseConfig.java
+        |           |       package-info.java
+        |           |       
+        |           +---controller
+        |           |   |   AuthController.java
+        |           |   |   package-info.java
+        |           |   |   TenantDashboardController.java
+        |           |   |   
+        |           |   +---admin
+        |           |   |       AdminDashboardController.java
+        |           |   |       AdminPropertyController.java
+        |           |   |       AdminUserManagementController.java
+        |           |   |       package-info.java
+        |           |   |       
+        |           |   \---landlord
+        |           |           LandlordDashboardController.java
+        |           |           package-info.java
+        |           |           
+        |           +---dao
+        |           |       package-info.java
+        |           |       PropertyDAO.java
+        |           |       UserDAO.java
+        |           |       
+        |           +---filter
+        |           |       AuthFilter.java
+        |           |       package-info.java
+        |           |       
+        |           +---model
+        |           |       package-info.java
+        |           |       Property.java
+        |           |       PropertyPhoto.java
+        |           |       User.java
+        |           |       
+        |           \---services
+        |                   AuthService.java
+        |                   package-info.java
+        |                   
+        \---webapp
+            +---assets
+            |   \---icons
+            |           hide-password.png
+            |           show-password.png
+            |           
+            +---css
+            |       dashboard.css
+            |       landlord-dashboard.css
+            |       styles.css
+            |       
+            +---js
+            |   |   admin-users.js
+            |   |   
+            |   +---admin
+            |   |       users.js
+            |   |       
+            |   +---common
+            |   |       utils.js
+            |   |       
+            |   \---landlord
+            |           dashboard.js
+            |           
+            +---META-INF
+            |       MANIFEST.MF
+            |       
+            +---uploads
+            |   +---profiles
+            |   \---properties
+            \---WEB-INF
+                +---lib
+                |       jakarta.servlet.jsp.jstl-3.0.1.jar
+                |       jakarta.servlet.jsp.jstl-api-3.0.0.jar
+                |       
+                \---pages
+                    |   index.jsp
+                    |   login.jsp
+                    |   register.jsp
+                    |   
+                    +---admin
+                    |       dashboard.jsp
+                    |       maintainance.jsp
+                    |       payments.jsp
+                    |       properties.jsp
+                    |       rental-requests.jsp
+                    |       users.jsp
+                    |       
+                    +---landlord
+                    |       add-property.jsp
+                    |       dashboard.jsp
+                    |       edit-property.jsp
+                    |       leases.jsp
+                    |       payments.jsp
+                    |       properties.jsp
+                    |       rental-requests.jsp
+                    |       reviews.jsp
+                    |       
+                    \---tenant
+                            dashboard.jsp
+                            

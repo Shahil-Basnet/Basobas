@@ -1,4 +1,4 @@
-package com.basobas.controller;
+package com.basobas.controller.landlord;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,16 +8,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Servlet implementation class AdminDashboardController
+ * Servlet implementation class LandlordDashboardController
  */
-@WebServlet("/admin/dashboard")
-public class AdminDashboardController extends HttpServlet {
+@WebServlet("/landlord/dashboard")
+public class LandlordDashboardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminDashboardController() {
+    public LandlordDashboardController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +28,7 @@ public class AdminDashboardController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         
-        request.getRequestDispatcher("/WEB-INF/pages/jsps/admin/dashboard.jsp")
+        request.getRequestDispatcher("/WEB-INF/pages/landlord/dashboard.jsp")
                .forward(request, response);
     }
 

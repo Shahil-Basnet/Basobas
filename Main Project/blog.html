@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Anjal Bhattarai,Ishan Maharjan,Shahil Basnet,Sushan Pudasaini">
+    <meta name="description" content="A website to learn different features of css">
+    <meta name="keywords" content="css, tailwindcss, tailwind, js, SEO">
+    <title>GameDev Learn - Master Web Development</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'quest-primary': '#3B82F6',
+                        'quest-secondary': '#10B981',
+                        'quest-accent': '#F59E0B',
+                        'quest-dark': '#1F2937',
+                        'quest-light': '#F3F4F6'
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'pulse-slow': 'pulse 3s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #cbd5e1;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .code-block {
+            background: #1e293b;
+            border-left: 4px solid #6366f1;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .logo-bg {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            margin-right: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .logo-large {
+            font-size: 2.5rem;
+        }
+
+        .tech-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tech-card:hover {
+            border-color: #6366f1;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .active-card {
+            border-color: #6366f1;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .section-anchor {
+            scroll-margin-top: 100px;
+        }
+
+        /* Full width footer */
+        .full-width-container {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-quest-dark/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <!-- Clickable logo that redirects to home -->
+                    <a href="./index.html" class="flex items-center space-x-2">
+                        <img src="./img/logo.png" alt="Logo" class="h-8 inline-block rounded-full">
+                        <h1 class="text-2xl font-bold">Tailwind Quest</h1>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="./index.html"
+                        class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Home</a>
+                    <a href="./topics.html"
+                        class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Learn</a>
+                    <a href="./about.html"
+                        class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">About
+                        Us</a>
+                    <a href="./contactus.html"
+                        class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Contact
+                        Us</a>
+                    <a href="./blog.html"
+                        class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Blog</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button class="text-gray-300 hover:text-quest-primary focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <span class="text-sm text-gray-300">Level: <span id="level"
+                            class="font-bold text-quest-secondary">1</span></span>
+                    <span class="text-sm text-gray-300">Score: <span id="score"
+                            class="font-bold text-quest-accent">0</span></span>
+                    <span class="text-sm text-gray-300">Concepts: <span id="concepts"
+                            class="font-bold text-purple-400">0</span></span>
+                </div>
+            </div>
+
+            <!-- Mobile Menu (Hidden by default) -->
+            <div class="md:hidden hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="./index.html"
+                        class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Home</a>
+                    <a href="./topics.html"
+                        class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Learn</a>
+                    <a href="./about.html"
+                        class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">About
+                        Us</a>
+                    <a href="./contactus.html"
+                        class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Contact
+                        Us</a>
+                    <a href="./blog.html"
+                        class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Blog</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container mx-auto px-4 py-16 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+            Learn Tailwind CSS <span class="gradient-text">Through Gaming</span>
+        </h1>
+        <p class="text-xl text-slate-300 max-w-2xl mx-auto mb-10">
+            Master Tailwind CSS through us.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <button class="gradient-bg text-white px-6 py-3 rounded-lg font-semibold text-lg pulse"
+                onclick="location.href='topics.html'">
+                Start Learning Now
+            </button>
+        </div>
+    </section>
+    <!-- Tech Overview Section -->
+    <section class="container mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold text-white text-center mb-12">About Web Technologies</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- HTML Card -->
+            <div class="tech-card card-hover bg-slate-800 rounded-2xl p-6 shadow-lg"
+                onclick="scrollToSection('html-section')">
+                <div class="logo-bg">
+                    <i class="fab fa-html5 text-orange-500 logo-large"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-white mt-4">HTML5</h3>
+                <p class="mt-2">The backbone of every website, HTML provides the structure and content of web pages.</p>
+                <ul class="mt-4 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Semantic markup</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Game canvas elements</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Multimedia support</span>
+                    </li>
+                </ul>
+                <div class="mt-4 text-indigo-400 flex items-center">
+                    <span>Learn more</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+
+            <!-- CSS Card -->
+            <div class="tech-card card-hover bg-slate-800 rounded-2xl p-6 shadow-lg"
+                onclick="scrollToSection('css-section')">
+                <div class="logo-bg">
+                    <i class="fab fa-css3-alt text-blue-400 logo-large"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-white mt-4">CSS3</h3>
+                <p class="mt-2">Controls the presentation, formatting, and layout of web pages with beautiful styling.
+                </p>
+                <ul class="mt-4 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Responsive design</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Animations & transitions</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Flexbox & Grid layout</span>
+                    </li>
+                </ul>
+                <div class="mt-4 text-indigo-400 flex items-center">
+                    <span>Learn more</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+
+            <!-- JavaScript Card -->
+            <div class="tech-card card-hover bg-slate-800 rounded-2xl p-6 shadow-lg"
+                onclick="scrollToSection('js-section')">
+                <div class="logo-bg">
+                    <i class="fab fa-js-square text-yellow-400 logo-large"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-white mt-4">JavaScript</h3>
+                <p class="mt-2">Adds interactivity and dynamic behavior to websites, enabling complex game logic.</p>
+                <ul class="mt-4 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Game mechanics</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>User interactions</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>API integrations</span>
+                    </li>
+                </ul>
+                <div class="mt-4 text-indigo-400 flex items-center">
+                    <span>Learn more</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+
+            <!-- Tailwind CSS Card -->
+            <div class="tech-card card-hover bg-slate-800 rounded-2xl p-6 shadow-lg"
+                onclick="scrollToSection('tailwind-section')">
+                <div class="logo-bg">
+                    <svg class="logo-large" xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                        viewBox="0 0 54 33" fill="none">
+                        <path
+                            d="M27 0C19.2 0 14.4 4.8 12 9.6C14.4 6 18 4.8 21.6 6C23.52 6.72 24.96 8.16 26.64 9.84C29.52 12.72 32.88 16.08 40.8 16.08C48.6 16.08 53.4 11.28 55.8 6.48C53.4 10.08 49.8 11.28 46.2 10.08C44.28 9.36 42.84 7.92 41.04 6.24C38.16 3.36 34.8 0 27 0ZM12 16.32C4.2 16.32 -0.6 21.12 -3 25.92C-0.6 22.32 3 21.12 6.6 22.32C8.52 23.04 9.96 24.48 11.76 26.16C14.64 29.04 18 32.4 25.8 32.4C33.6 32.4 38.4 27.6 40.8 22.8C38.4 26.4 34.8 27.6 31.2 26.4C29.28 25.68 27.84 24.24 26.04 22.56C23.16 19.68 19.8 16.32 12 16.32Z"
+                            fill="#38BDF8" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mt-4">Tailwind CSS</h3>
+                <p class="mt-2">A utility-first CSS framework for rapidly building custom user interfaces.</p>
+                <ul class="mt-4 space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Rapid prototyping</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Responsive utilities</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Customizable design</span>
+                    </li>
+                </ul>
+                <div class="mt-4 text-indigo-400 flex items-center">
+                    <span>Learn more</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12 grid md:grid-cols-3 gap-8">
+        <!-- Article Content -->
+        <div class="md:col-span-2">
+            <article class="bg-slate-800 rounded-2xl p-6 shadow-lg">
+                <h2 class="text-3xl font-bold text-white mb-6">Understanding Web Development Fundamentals</h2>
+
+                <div id="html-section" class="mb-10 section-anchor">
+                    <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                        <div class="logo-bg">
+                            <i class="fab fa-html5 text-orange-500 logo-large"></i>
+                        </div>
+                        HTML - The Structure
+                    </h3>
+                    <p class="mb-4">HTML (HyperText Markup Language) is the backbone of every website. It provides the
+                        basic structure of sites, which is then enhanced and modified by other technologies like CSS and
+                        JavaScript.</p>
+                    <p class="mb-4">HTML uses a system of tags and attributes to define elements like headings,
+                        paragraphs, links, images, and more. In game development, HTML provides the canvas element which
+                        is particularly important for rendering graphics.</p>
+                    <div class="code-block p-4 rounded mb-4">
+                        <pre class="text-slate-200">
+                            <code>&lt;!DOCTYPE html&gt;
+                                &lt;html&gt;
+                                &lt;head&gt;
+                                    &lt;title&gt;My Game&lt;/title&gt;
+                                &lt;/head&gt;
+                                &lt;body&gt;
+                                    &lt;h1&gt;Welcome to My Game&lt;/h1&gt;
+                                    &lt;div id="game-container"&gt;
+                                        &lt;canvas id="game-canvas" width="800" height="600"&gt;&lt;/canvas&gt;
+                                        &lt;button id="start-btn"&gt;Start Game&lt;/button&gt;
+                                    &lt;/div&gt;
+                                &lt;/body&gt;
+                                &lt;/html&gt;
+                        </code>
+                        </pre>
+                    </div>
+                    <p>Think of HTML as the skeleton of your web page - it defines elements like headings, paragraphs,
+                        buttons, and containers. Without HTML, there would be no structure to build upon.</p>
+                </div>
+
+                <div id="css-section" class="mb-10 section-anchor">
+                    <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                        <div class="logo-bg">
+                            <i class="fab fa-css3-alt text-blue-400 logo-large"></i>
+                        </div>
+                        CSS - The Style
+                    </h3>
+                    <p class="mb-4">CSS (Cascading Style Sheets) is used to control the presentation, formatting, and
+                        layout of web pages. CSS allows you to transform the basic HTML structure into something
+                        visually appealing.</p>
+                    <p class="mb-4">With CSS, you can control colors, fonts, spacing, positioning, and even create
+                        complex animations. For game development, CSS can be used to style game interfaces, create
+                        loading animations, and ensure your game looks good on all screen sizes.</p>
+                    <div class="code-block p-4 rounded mb-4">
+                        <pre class="text-slate-200">
+                            <code>
+                                #game-container {
+                                    width: 800px;
+                                    height: 600px;
+                                    background: #2d3748;
+                                    border-radius: 12px;
+                                    margin: 0 auto;
+                                    position: relative;
+                                    overflow: hidden;
+                                    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+                                }
+
+                                #start-btn {
+                                    background: #6366f1;
+                                    color: white;
+                                    padding: 12px 24px;
+                                    border: none;
+                                    border-radius: 6px;
+                                    cursor: pointer;
+                                    font-size: 1.1rem;
+                                    font-weight: 600;
+                                    transition: all 0.2s ease;
+                                }
+
+                                #start-btn:hover {
+                                    background: #4f46e5;
+                                    transform: translateY(-2px);
+                                }
+                            </code>
+                        </pre>
+                    </div>
+                    <p>CSS brings your website to life with colors, animations, responsive layouts, and beautiful
+                        typography. It's what makes the difference between a basic HTML page and a polished,
+                        professional-looking web application.</p>
+                </div>
+
+                <div id="js-section" class="mb-10 section-anchor">
+                    <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                        <div class="logo-bg">
+                            <i class="fab fa-js-square text-yellow-400 logo-large"></i>
+                        </div>
+                        JavaScript - The Behavior
+                    </h3>
+                    <p class="mb-4">JavaScript is a programming language that enables interactive web pages. It is an
+                        essential part of web applications and can handle game logic, user interactions, and dynamic
+                        content updates.</p>
+                    <p class="mb-4">JavaScript can manipulate HTML and CSS, handle user events, communicate with
+                        servers, and even create complex game mechanics using frameworks like Phaser or Three.js. Modern
+                        JavaScript (ES6+) includes features like classes, modules, and arrow functions that make it
+                        easier to write and maintain complex code.</p>
+                    <div class="code-block p-4 rounded mb-4">
+                        <pre class="text-slate-200">
+                            <code>
+                                const startBtn = document.getElementById('start-btn');
+                                const gameContainer = document.getElementById('game-container');
+                                const canvas = document.getElementById('game-canvas');
+                                const ctx = canvas.getContext('2d');
+
+                                startBtn.addEventListener('click', () => {
+                                    startBtn.style.display = 'none';
+                                    startGame();
+                                });
+
+                                function startGame() {
+                                    // Game initialization code
+                                    gameContainer.innerHTML = '&lt;div class="game-screen"&gt;Game started!&lt;/div&gt;';
+                                    
+                                    // Game loop
+                                    function gameLoop() {
+                                        update();
+                                        render();
+                                        requestAnimationFrame(gameLoop);
+                                    }
+                                    
+                                    function update() {
+                                        // Update game state
+                                    }
+                                    
+                                    function render() {
+                                        // Render game graphics
+                                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                        // Draw game elements
+                                    }
+                                    
+                                    gameLoop();
+                                }
+                            </code>
+                        </pre>
+                        <p>JavaScript adds functionality to your web pages, making them dynamic and interactive. From
+                            simple form validation to complex game mechanics, JavaScript handles it all. With the
+                            addition of WebGL, JavaScript can even power sophisticated 3D games in the browser.</p>
+                    </div>
+
+                    <div id="tailwind-section" class="section-anchor">
+                        <h3 class="text-2xl font-semibold text-white mb-4 flex items-center">
+                            <div class="logo-bg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 54 33"
+                                    fill="none">
+                                    <path
+                                        d="M27 0C19.2 0 14.4 4.8 12 9.6C14.4 6 18 4.8 21.6 6C23.52 6.72 24.96 8.16 26.64 9.84C29.52 12.72 32.88 16.08 40.8 16.08C48.6 16.08 53.4 11.28 55.8 6.48C53.4 10.08 49.8 11.28 46.2 10.08C44.28 9.36 42.84 7.92 41.04 6.24C38.16 3.36 34.8 0 27 0ZM12 16.32C4.2 16.32 -0.6 21.12 -3 25.92C-0.6 22.32 3 21.12 6.6 22.32C8.52 23.04 9.96 24.48 11.76 26.16C14.64 29.04 18 32.4 25.8 32.4C33.6 32.4 38.4 27.6 40.8 22.8C38.4 26.4 34.8 27.6 31.2 26.4C29.28 25.68 27.84 24.24 26.04 22.56C23.16 19.68 19.8 16.32 12 16.32Z"
+                                        fill="#38BDF8" />
+                                </svg>
+                            </div>
+                            Tailwind CSS - Modern Styling
+                        </h3>
+                        <p class="mb-4">Tailwind CSS is a utility-first CSS framework that allows you to build custom
+                            designs without ever leaving your HTML. It provides low-level utility classes that let you
+                            build completely custom designs.</p>
+                        <p class="mb-4">Unlike other CSS frameworks like Bootstrap that provide pre-designed components,
+                            Tailwind gives you building blocks to create your own unique designs. This makes it perfect
+                            for game interfaces where you need custom styling that stands out.</p>
+                        <div class="code-block p-4 rounded mb-4">
+                            <pre class="text-slate-200">
+                            <code>
+                                &lt;!-- Example with regular HTML/CSS --&gt;
+                                &lt;button class="start-button"&gt;Start Game&lt;/button&gt;
+                                &lt;style&gt;
+                                .start-button {
+                                    background: #6366f1;
+                                    color: white;
+                                    padding: 12px 24px;
+                                    border: none;
+                                    border-radius: 6px;
+                                    cursor: pointer;
+                                    font-size: 1.1rem;
+                                    font-weight: 600;
+                                    transition: all 0.2s ease;
+                                }
+
+                                .start-button:hover {
+                                    background: #4f46e5;
+                                    transform: translateY(-2px);
+                                }
+                                &lt;/style&gt;
+
+                                &lt;!-- Same button with Tailwind CSS --&gt;
+                                &lt;button class="bg-indigo-500 text-white px-6 py-3 
+                                            rounded-lg cursor-pointer font-semibold
+                                            text-lg hover:bg-indigo-600 transition 
+                                            duration-200 transform hover:-translate-y-1"&gt;
+                                    Start Game
+                                &lt;/button&gt;
+                            </code>
+                        </pre>
+                        </div>
+                        <p>Tailwind CSS helps you rapidly build modern websites without writing custom CSS. It's highly
+                            customizable and responsive, making it perfect for game UIs and interactive learning
+                            platforms. With its mobile-first approach, you can ensure your game interface looks great on
+                            all devices.</p>
+                    </div>
+            </article>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="md:col-span-1">
+            <div class="bg-slate-800 rounded-2xl p-6 shadow-lg mb-8">
+                <h3 class="text-xl font-semibold text-white mb-4">Why Learn with Games?</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center p-3 bg-slate-700 rounded-lg">
+                        <i class="fas fa-gamepad text-indigo-400 text-xl mr-3"></i>
+                        <span>Interactive learning experience</span>
+                    </li>
+                    <li class="flex items-center p-3 bg-slate-700 rounded-lg">
+                        <i class="fas fa-bolt text-yellow-400 text-xl mr-3"></i>
+                        <span>Immediate visual feedback</span>
+                    </li>
+                    <li class="flex items-center p-3 bg-slate-700 rounded-lg">
+                        <i class="fas fa-puzzle-piece text-green-400 text-xl mr-3"></i>
+                        <span>Practice problem-solving skills</span>
+                    </li>
+                    <li class="flex items-center p-3 bg-slate-700 rounded-lg">
+                        <i class="fas fa-heart text-red-400 text-xl mr-3"></i>
+                        <span>More engaging than traditional tutorials</span>
+                    </li>
+                    <li class="flex items-center p-3 bg-slate-700 rounded-lg">
+                        <i class="fas fa-trophy text-amber-400 text-xl mr-3"></i>
+                        <span>Build a portfolio of fun projects</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-slate-800 rounded-2xl p-6 shadow-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">Learning Path</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start p-4 bg-slate-700 rounded-lg">
+                        <span
+                            class="gradient-bg text-white rounded-full h-8 w-8 flex items-center justify-center mr-3 flex-shrink-0">1</span>
+                        <div>
+                            <h4 class="font-semibold text-white">HTML Fundamentals</h4>
+                            <p class="text-sm text-slate-300">Structure your game interface</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-4 bg-slate-700 rounded-lg">
+                        <span
+                            class="gradient-bg text-white rounded-full h-8 w-8 flex items-center justify-center mr-3 flex-shrink-0">2</span>
+                        <div>
+                            <h4 class="font-semibold text-white">CSS Styling</h4>
+                            <p class="text-sm text-slate-300">Make your game visually appealing</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-4 bg-slate-700 rounded-lg">
+                        <span
+                            class="gradient-bg text-white rounded-full h-8 w-8 flex items-center justify-center mr-3 flex-shrink-0">3</span>
+                        <div>
+                            <h4 class="font-semibold text-white">JavaScript Gameplay</h4>
+                            <p class="text-sm text-slate-300">Add interactivity and game logic</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start p-4 bg-slate-700 rounded-lg">
+                        <span
+                            class="gradient-bg text-white rounded-full h-8 w-8 flex items-center justify-center mr-3 flex-shrink-0">4</span>
+                        <div>
+                            <h4 class="font-semibold text-white">Tailwind CSS</h4>
+                            <p class="text-sm text-slate-300">Style efficiently with utility classes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Full Width Footer -->
+    <footer class="full-width-container bg-quest-dark text-gray-400 border-t border-gray-700 mt-16">
+        <div class="w-full px-6 py-10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+
+                <!-- Brand Info -->
+                <div>
+                    <div class="flex items-center justify-center md:justify-start space-x-2 mb-2">
+                        <img src="./img/logo.png" alt="Tailwind Quest Logo" class="w-6 h-6">
+                        <h2 class="text-xl font-bold text-quest-primary">Tailwind Quest</h2>
+                    </div>
+                    <p class="text-sm">
+                        Making Tailwind CSS learning fun, interactive, and rewarding.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-3">Quick Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="./index.html" class="hover:text-quest-primary transition">Home</a></li>
+                        <li><a href="./about.html" class="hover:text-quest-primary transition">About Us</a></li>
+                        <li><a href="./contactus.html" class="hover:text-quest-primary transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social / Contact -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-3">Follow Us</h3>
+                    <div class="flex justify-center md:justify-start space-x-4">
+
+                        <!-- Facebook -->
+                        <a href="#"
+                            class="bg-gray-700 hover:bg-purple-400 p-3 rounded-full transition transform hover:-translate-y-1">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+
+                        <!-- GitHub -->
+                        <a href="https://github.com/anjalbhattarai79/Tailwind-Quest.git" target="_blank"
+                            class="bg-gray-700 hover:bg-purple-400 p-3 rounded-full transition transform hover:-translate-y-1">
+                            <i class="fab fa-github text-white"></i>
+                        </a>
+
+                        <!-- Dribbble -->
+                        <a href="#"
+                            class="bg-gray-700 hover:bg-purple-400 p-3 rounded-full transition transform hover:-translate-y-1">
+                            <i class="fab fa-dribbble text-white"></i>
+                        </a>
+
+                        <!-- LinkedIn -->
+                        <a href="#"
+                            class="bg-gray-700 hover:bg-purple-400 p-3 rounded-full transition transform hover:-translate-y-1">
+                            <i class="fab fa-linkedin-in text-white"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-full text-center text-sm text-gray-500 border-t border-gray-700 py-4">
+            © 2025 Tailwind Quest — Built with Tailwind CSS
+        </div>
+    </footer>
+
+    <script>
+        // Function to scroll to a section
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+
+                // Add active class to highlight the section
+                element.classList.add('active-card');
+
+                // Remove the active class after some time
+                setTimeout(() => {
+                    element.classList.remove('active-card');
+                }, 2000);
+            }
+        }
+
+        // Simple JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function () {
+            // Pulse animation for CTA button
+            const ctaButton = document.querySelector('.pulse');
+
+            setInterval(() => {
+                ctaButton.classList.toggle('pulse');
+            }, 4000);
+
+            // Code block copy functionality
+            const codeBlocks = document.querySelectorAll('.code-block');
+
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', () => {
+                    const code = block.querySelector('code').innerText;
+                    navigator.clipboard.writeText(code).then(() => {
+                        const originalHtml = block.innerHTML;
+                        block.innerHTML = '<p class="text-green-400 text-center">Code copied to clipboard!</p>';
+
+                        setTimeout(() => {
+                            block.innerHTML = originalHtml;
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

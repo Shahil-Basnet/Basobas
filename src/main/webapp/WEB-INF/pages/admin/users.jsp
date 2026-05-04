@@ -24,6 +24,51 @@
 	href="${pageContext.request.contextPath}/css/styles.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/dashboard.css">
+
+<style>
+/* Sorting indicators */
+th[data-sort] {
+	cursor: pointer;
+	user-select: none;
+	transition: background 0.2s;
+}
+
+th[data-sort]:hover {
+	background: var(--surface-container-high);
+}
+
+.sort-indicator {
+	display: inline-flex;
+	align-items: center;
+	margin-left: 0.5rem;
+	font-size: 0.75rem;
+	vertical-align: middle;
+}
+
+.sort-indicator .material-symbols-outlined {
+	font-size: 1rem;
+	transition: color 0.2s;
+}
+
+/* Active sort column */
+th[data-sort].sort-asc .sort-indicator .material-symbols-outlined {
+	color: var(--primary);
+}
+
+th[data-sort].sort-desc .sort-indicator .material-symbols-outlined {
+	color: var(--primary);
+}
+
+/* Inactive sort column */
+th[data-sort] .sort-indicator .material-symbols-outlined {
+	color: var(--outline);
+	opacity: 0.5;
+}
+
+th[data-sort]:hover .sort-indicator .material-symbols-outlined {
+	opacity: 1;
+}
+</style>
 </head>
 <body>
 
@@ -84,19 +129,69 @@
 		</div>
 
 		<div class="dashboard-container">
+			<!-- Alert Messages -->
+			<c:if test="${not empty sessionScope.message}">
+				<div class="alert alert-${sessionScope.messageType != null ? sessionScope.messageType : 'success'}">
+					<span class="material-symbols-outlined">
+						${sessionScope.messageType == 'error' ? 'error' : 'check_circle'}
+					</span>
+					<div>${sessionScope.message}</div>
+				</div>
+				<%-- Clear the message after displaying it --%>
+				<c:remove var="message" scope="session" />
+				<c:remove var="messageType" scope="session" />
+			</c:if>
+
 			<!-- Header -->
 			<div class="page-header">
 				<div>
 					<div class="section-badge">Administration</div>
-					<h2 class="page-title">Users Management</h2>
+					<h2 class="page-title">User Management</h2>
 					<p class="page-subtitle">Oversee and manage your estate's
 						platform users, roles, and security protocols through this central
 						directory.</p>
 				</div>
-				<button class="create-user-btn">
+				<button class="create-user-btn" onclick="openCreateUserModal()">
 					<span class="material-symbols-outlined" style="font-size: 1.25rem;">person_add</span>
 					Create New User
 				</button>
+			</div>
+
+			<!-- User Metrics Cards -->
+			<div class="stats-grid">
+				<div class="stat-card">
+					<div class="stat-icon" style="background: #eef2fa;">
+						<span class="material-symbols-outlined" style="color: #4a627a;">admin_panel_settings</span>
+					</div>
+					<h4>Total Admins</h4>
+					<div class="stat-number">${adminCount}</div>
+					<div class="stat-trend">
+						<span class="material-symbols-outlined" style="font-size: 1rem;">info</span>
+						System Administrators
+					</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-icon" style="background: #fff8f0;">
+						<span class="material-symbols-outlined" style="color: #b45309;">real_estate_agent</span>
+					</div>
+					<h4>Total Landlords</h4>
+					<div class="stat-number">${landlordCount}</div>
+					<div class="stat-trend" style="color: #b45309;">
+						<span class="material-symbols-outlined" style="font-size: 1rem;">info</span>
+						Property Owners
+					</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-icon" style="background: #f0fdf4;">
+						<span class="material-symbols-outlined" style="color: #166534;">group</span>
+					</div>
+					<h4>Total Tenants</h4>
+					<div class="stat-number">${tenantCount}</div>
+					<div class="stat-trend" style="color: #166534;">
+						<span class="material-symbols-outlined" style="font-size: 1rem;">info</span>
+						Active Renters
+					</div>
+				</div>
 			</div>
 
 			<!-- Filter Bar -->
@@ -132,14 +227,46 @@
 						<thead>
 							<tr>
 								<th></th>
-								<th data-sort="user_id">User ID</th>
-								<th data-sort="full_name">Full Name</th>
-								<th data-sort="username">Username</th>
-								<th data-sort="email">Email</th>
-								<th data-sort="role">Role</th>
-								<th data-sort="phone">Phone</th>
-								<th data-sort="registered_at">Registered On</th>
-								<th data-sort="last_logged_in">Last Login</th>
+								<th data-sort="user_id" id="sort-user_id">User ID <span
+									class="sort-indicator"> <span
+										class="material-symbols-outlined">unfold_more</span>
+								</span>
+								</th>
+								<th data-sort="full_name" id="sort-full_name">Full Name <span
+									class="sort-indicator"> <span
+										class="material-symbols-outlined">unfold_more</span>
+								</span>
+								</th>
+								<th data-sort="username" id="sort-username">Username <span
+									class="sort-indicator"> <span
+										class="material-symbols-outlined">unfold_more</span>
+								</span>
+								</th>
+								<th data-sort="email" id="sort-email">Email <span
+									class="sort-indicator"> <span
+										class="material-symbols-outlined">unfold_more</span>
+								</span>
+								</th>
+								<th data-sort="role" id="sort-role">Role <span
+									class="sort-indicator"> <span
+										class="material-symbols-outlined">unfold_more</span>
+								</span>
+								</th>
+								<th data-sort="phone" id="sort-phone">Phone <span
+									class="sort-indicator"> <span
+										class="material-symbols-outlined">unfold_more</span>
+								</span>
+								</th>
+								<th data-sort="registered_at" id="sort-registered_at">
+									Registered On <span class="sort-indicator"> <span
+										class="material-symbols-outlined">unfold_more</span>
+								</span>
+								</th>
+								<th data-sort="last_logged_in" id="sort-last_logged_in">
+									Last Login <span class="sort-indicator"> <span
+										class="material-symbols-outlined">unfold_more</span>
+								</span>
+								</th>
 								<th style="text-align: center;">Actions</th>
 							</tr>
 						</thead>
@@ -172,11 +299,79 @@
 		<span class="material-symbols-outlined">add</span>
 	</button>
 
+	<!-- Create User Modal -->
+	<div id="createUserModal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Create New User</h3>
+				<button class="modal-close" onclick="closeCreateUserModal()">&times;</button>
+			</div>
+			<form id="createUserForm">
+				<div class="modal-body">
+					<div class="form-row">
+						<div class="form-group">
+							<label>Full Name *</label> 
+							<input type="text" id="fullName" class="estate-input" required>
+						</div>
+						<div class="form-group">
+							<label>Username *</label> 
+							<input type="text" id="username" class="estate-input" required>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group">
+							<label>Email *</label> 
+							<input type="email" id="email" class="estate-input" required>
+						</div>
+						<div class="form-group">
+							<label>Phone</label> 
+							<input type="tel" id="phone" class="estate-input">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group">
+							<label>Role *</label> 
+							<select id="role" class="estate-input" required>
+								<option value="tenant">Tenant</option>
+								<option value="landlord">Landlord</option>
+								<option value="admin">Admin</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Date of Birth</label> 
+							<input type="date" id="dateOfBirth" class="estate-input">
+						</div>
+					</div>
+					<div class="form-group">
+						<label>Address</label>
+						<textarea id="address" class="estate-input" rows="2"></textarea>
+					</div>
+					<div class="form-row">
+						<div class="form-group">
+							<label>Password *</label> 
+							<input type="password" id="password" class="estate-input" required>
+						</div>
+						<div class="form-group">
+							<label>Confirm Password *</label> 
+							<input type="password" id="confirmPassword" class="estate-input" required>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn-secondary" onclick="closeCreateUserModal()">Cancel</button>
+					<button type="submit" class="btn-primary">Create User</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Scripts -->
 	<script>
 		window.contextPath = '${pageContext.request.contextPath}';
 		console.log('Context path set:', window.contextPath);
 	</script>
-	<script src="${pageContext.request.contextPath}/js/admin-users.js"></script>
+	<script src="${pageContext.request.contextPath}/js/common/utils.js"></script>
+	<script src="${pageContext.request.contextPath}/js/admin/users.js"></script>
 
 </body>
 </html>

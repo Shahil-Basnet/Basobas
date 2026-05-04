@@ -18,5 +18,20 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Shahil/Documents/YEAR2/S4/DSA/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Shahil/Documents/YEAR2/S4/DSA/Workspace/Basobas/src/main/webapp/WEB-INF/lib/jakarta.servlet.jsp.jstl-3.0.1.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Shahil/Documents/YEAR2/S4/DSA/Workspace/Basobas/src/main/webapp/WEB-INF/lib/jakarta.servlet.jsp.jstl-api-3.0.0.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

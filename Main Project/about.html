@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Anjal Bhattarai,Ishan Maharjan,Shahil Basnet,Sushan Pudasaini">
+  <meta name="description" content="A website to learn different features of css">
+  <meta name="keywords" content="css, tailwindcss, tailwind, js, SEO">
+  <title>About Us - Tailwind Quest</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'quest-primary': '#3B82F6',
+            'quest-secondary': '#10B981',
+            'quest-accent': '#F59E0B',
+            'quest-dark': '#1F2937',
+            'quest-light': '#F3F4F6'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #cbd5e1;
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-900 min-h-screen">
+
+  <!-- Navigation -->
+  <nav class="bg-quest-dark/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50 ">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-4">
+          <img src="./img/logo.png" alt="Logo" class="h-8 inline-block rounded-full">
+          <h1 class="text-2xl font-bold ">Tailwind Quest</h1>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="./index.html" class="text-quest-primary font-medium">Home</a>
+          <a href="./topics.html"
+            class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Learn</a>
+          <a href="./about.html"
+            class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">About Us</a>
+          <a href="./contactus.html"
+            class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Contact Us</a>
+          <a href="./blog.html"
+            class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Blog</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button class="text-gray-300 hover:text-quest-primary focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="hidden md:flex items-center space-x-4">
+          <span class="text-sm text-gray-300">Level: <span id="level"
+              class="font-bold text-quest-secondary">1</span></span>
+          <span class="text-sm text-gray-300">Score: <span id="score"
+              class="font-bold text-quest-accent">0</span></span>
+          <span class="text-sm text-gray-300">Concepts: <span id="concepts"
+              class="font-bold text-purple-400">0</span></span>
+        </div>
+      </div>
+
+      <!-- Mobile Menu (Hidden by default) -->
+      <div class="md:hidden hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <a href="./index.html"
+            class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Home</a>
+          <a href="./topics.html"
+            class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Play Game</a>
+          <a href="./about.html"
+            class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">About Us</a>
+          <a href="./contactus.html"
+            class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Contact Us</a>
+          <a href="./blog.html"
+            class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Blog</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- About Section -->
+  <section class="py-16 px-6 max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-4 text-quest-primary">Meet the Creators</h1>
+      <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+        Tailwind Quest was created by a passionate team of students who
+        came together for a collaborative project with a shared vision: to make learning Tailwind CSS fun,
+        interactive, and rewarding.
+      </p><br><br>
+    </div>
+
+    <div class="space-y-12">
+      <!-- Member 1: Anjal -->
+      <a href="https://github.com/anjalbhattarai79" target="_blank" class="block">
+        <div
+          class="flex flex-col md:flex-row items-center bg-quest-dark py-12 px-6 rounded-lg border border-white/10 shadow-md hover:border-quest-primary transition">
+
+          <!-- Photo with hover bio -->
+          <a href="https://www.linkedin.com/in/anjalbhattarai79/" target="_blank">
+            <div class="relative group mb-6 md:mb-0 md:mr-8">
+              <img src="./img/anjal.jpg" alt="Anjal Bhattarai"
+                class="w-56 h-56 rounded-full border-4 border-quest-primary object-cover transition-transform duration-300 transform hover:scale-105" />
+            </div>
+          </a>
+
+          <div class="text-center md:text-left">
+            <h3 class="text-2xl font-semibold text-white mb-2">Anjal Bhattarai</h3>
+            <p class="text-quest-secondary text-lg mb-3">Frontend Engineer</p>
+            <p class="text-gray-400 text-base">
+              Anjal specializes in building elegant UIs with Tailwind CSS and React. He designed most of the learning
+              interface.
+            </p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Member 2: Sushan -->
+      <a href="https://github.com/sushanpudasaini" target="_blank" class="block">
+        <div
+          class="flex flex-col md:flex-row-reverse items-center bg-quest-dark py-12 px-6 rounded-lg border border-white/10 shadow-md hover:border-quest-accent transition">
+
+          <a href="https://www.linkedin.com/in/sushanpudasaini/" target="_blank">
+            <div
+              class="relative group mb-6 md:mb-0 md:ml-8 w-56 h-56 rounded-full overflow-hidden border-4 border-quest-accent">
+              <img src="./img/Sushan.jpg" alt="Sushan Pudasaini"
+                class="w-full h-full object-cover object-top scale-110 -mt-3 transition-transform duration-300 transform hover:scale-105" />
+            </div>
+          </a>
+
+          <div class="text-center md:text-right">
+            <h3 class="text-2xl font-semibold text-white mb-2">Sushan Pudasaini</h3>
+            <p class="text-quest-accent text-lg mb-3">Curriculum Developer</p>
+            <p class="text-gray-400 text-base">
+              Sushan crafted the challenge structure and progressive learning path to ensure educational value.
+            </p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Member 3: Ishan -->
+      <a href="https://github.com/ishanmaharjan" target="_blank" class="block">
+        <div
+          class="flex flex-col md:flex-row items-center bg-quest-dark py-12 px-6 rounded-lg border border-white/10 shadow-md hover:border-purple-400 transition">
+
+          <a href="https://www.linkedin.com/in/ishanmaharjan/" target="_blank">
+            <div class="relative group mb-6 md:mb-0 md:mr-8">
+              <img src="./img/ishan.jpg" alt="Ishan Maharjan"
+                class="w-56 h-56 rounded-full border-4 border-purple-400 object-cover object-top transition-transform duration-300 transform hover:scale-105" />
+            </div>
+          </a>
+
+          <div class="text-center md:text-left">
+            <h3 class="text-2xl font-semibold text-white mb-2">Ishan Maharjan</h3>
+            <p class="text-purple-400 text-lg mb-3">Full Stack Developer</p>
+            <p class="text-gray-400 text-base">
+              Ishan handled the backend systems and interactive real-time challenge engine that powers Tailwind Quest.
+            </p>
+          </div>
+        </div>
+      </a>
+
+      <!-- Member 4: Shahil -->
+      <a href="https://github.com/shahilbasnet" target="_blank" class="block">
+        <div
+          class="flex flex-col md:flex-row-reverse items-center bg-quest-dark py-12 px-6 rounded-lg border border-white/10 shadow-md hover:border-yellow-400 transition">
+
+          <a href="https://www.linkedin.com/in/shahilbasnet/" target="_blank">
+            <div class="relative group mb-6 md:mb-0 md:ml-8">
+              <img src="./img/shahil.jpg" alt="Shahil Basnet"
+                class="w-56 h-56 rounded-full border-4 border-yellow-400 object-cover object-top transition-transform duration-300 transform hover:scale-105" />
+            </div>
+          </a>
+
+          <div class="text-center md:text-right">
+            <h3 class="text-2xl font-semibold text-white mb-2">Shahil Basnet</h3>
+            <p class="text-yellow-400 text-lg mb-3">AI & UX Designer</p>
+            <p class="text-gray-400 text-base">
+              Shahil created the AI tutor experience and designed a user-friendly UX to guide learners throughout their
+              journey.
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+
+
+  <!-- Footer -->
+  <footer class="bg-quest-dark text-gray-400 border-t border-gray-700 mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+
+      <!-- Brand Info -->
+      <div>
+        <div class="flex items-center justify-center md:justify-start space-x-2 mb-2">
+          <img src="./img/logo.png" alt="Tailwind Quest Logo" class="w-6 h-6">
+          <h2 class="text-xl font-bold text-quest-primary">Tailwind Quest</h2>
+        </div>
+
+        <p class="text-sm">
+          Making Tailwind CSS learning fun, interactive, and rewarding.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-3">Quick Links</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a href="./index.html" class="hover:text-quest-primary transition">Home</a></li>
+          <li><a href="./about.html" class="hover:text-quest-primary transition">About Us</a></li>
+          <li><a href="./contactus.html" class="hover:text-quest-primary transition">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Social / Contact -->
+      <div>
+        <h3 class="text-lg font-semibold text-white mb-3">Follow Us</h3>
+        <div class="flex justify-center md:justify-start space-x-4">
+          <!-- Facebook -->
+          <a href="#"
+            class="bg-gray-700 hover:bg-purple-400 p-3 rounded-full transition transform hover:-translate-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+              <path
+                d="M22.675 0h-21.35C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24h11.495v-9.294H9.692v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24h-1.918c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z" />
+            </svg>
+          </a>
+
+          <!-- GitHub -->
+          <a href="https://github.com/anjalbhattarai79/Tailwind-Quest.git" target="_blank"
+            class="bg-gray-700 hover:bg-purple-400 p-3 rounded-full transition transform hover:-translate-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+              <path
+                d="M12 0C5.373 0 0 5.373 0 12a12 12 0 008.207 11.387c.599.111.793-.261.793-.577v-2.234C5.662 21.302 5 19.16 5 19.16c-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604C7.148 16.71 4.346 15.681 4.346 11.084c0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23a10.518 10.518 0 016.009 0c2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576A12.001 12.001 0 0024 12c0-6.627-5.373-12-12-12z" />
+            </svg>
+          </a>
+
+          <!-- Dribbble -->
+          <a href="#"
+            class="bg-gray-700 hover:bg-purple-400 p-3 rounded-full transition transform hover:-translate-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+              <path
+                d="M12 0C5.373 0 0 5.373 0 12c0 6.627 5.373 12 12 12s12-5.373 12-12c0-6.627-5.373-12-12-12zM9.967 16.01c.564-1.789 1.632-3.932 1.821-4.474.273-.787-.211-1.136-1.74.209l-.34-.64c1.744-1.897 5.335-2.326 4.113.613-.763 1.835-1.309 3.074-1.621 4.03-.455 1.393.694.828 1.819-.211.153.25.203.331.356.619-2.498 2.378-5.271 2.588-4.408-.146zm4.742-8.169a1.26 1.26 0 01-1.761-.022c-.441-.465-.367-1.208.164-1.661a1.26 1.26 0 011.761.022c.439.466.367 1.209-.164 1.661z" />
+            </svg>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="#"
+            class="bg-gray-700 hover:bg-purple-400 p-3 rounded-full transition transform hover:-translate-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" viewBox="0 0 24 24">
+              <path
+                d="M19 0H5C2.239 0 0 2.239 0 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5V5c0-2.761-2.238-5-5-5zM8 19H5V8h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764S5.534 3.204 6.5 3.204s1.75.79 1.75 1.764-.783 1.764-1.75 1.764zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center text-sm text-gray-500 border-t border-gray-700 py-4">
+      © 2025 Tailwind Quest — Built with Tailwind CSS
+    </div>
+  </footer>
+
+
+</body>
+
+</html>

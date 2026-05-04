@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Anjal Bhattarai,Ishan Maharjan,Shahil Basnet,Sushan Pudasaini">
+    <meta name="description" content="A website to learn different features of css">
+    <meta name="keywords" content="css, tailwindcss, tailwind, js, SEO">
+    <title>Tailwind Quest - Choose Your Learning Path</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'quest-primary': '#3B82F6',
+                        'quest-secondary': '#10B981',
+                        'quest-accent': '#F59E0B',
+                        'quest-dark': '#1F2937',
+                        'quest-light': '#F3F4F6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #cbd5e1;
+        }
+        .topic-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .topic-card.selected {
+            border-color: #3B82F6;
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .category-header {
+            background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
+        }
+        
+        /* Full width footer */
+        .full-width-container {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+        
+        /* Social icon styling */
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Logo styling */
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-quest-dark/80 backdrop-blur-sm border-b border-gray-700 sticky top-0 z-50 ">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <!-- Make logo clickable to redirect to home -->
+                    <a href="./index.html" class="flex items-center space-x-2">
+                        <img src="./img/logo.png" alt="Logo" class="logo-img">
+                        <h1 class="text-2xl font-bold ">Tailwind Quest</h1>
+                    </a>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="./index.html" class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Home</a>
+                    <a href="./topics.html" class="text-quest-primary font-medium">Learn</a>
+                    <a href="./about.html" class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">About Us</a>
+                    <a href="./contactus.html" class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Contact Us</a>
+                    <a href="./blog.html" class="text-gray-300 hover:text-quest-primary transition-colors duration-200 font-medium">Blog</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button class="text-gray-300 hover:text-quest-primary focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-4">
+                    <span class="text-sm text-gray-300">Level: <span id="level" class="font-bold text-quest-secondary">1</span></span>
+                    <span class="text-sm text-gray-300">Score: <span id="score" class="font-bold text-quest-accent">0</span></span>
+                    <span class="text-sm text-gray-300">Concepts: <span id="concepts" class="font-bold text-purple-400">0</span></span>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu (Hidden by default) -->
+            <div class="md:hidden hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="./index.html" class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Home</a>
+                    <a href="./game.html" class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Play Game</a>
+                    <a href="./about.html" class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">About Us</a>
+                    <a href="./contactus.html" class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Contact Us</a>
+                    <a href="./blog.html" class="block px-3 py-2 text-gray-300 hover:text-quest-primary transition-colors duration-200">Blog</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Banner -->
+    <div class="max-w-7xl my-4 rounded-lg mx-auto bg-gradient-to-r from-quest-primary to-quest-secondary py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Choose Your Learning Path</h1>
+            <p class="text-xl text-gray-100 max-w-3xl mx-auto">
+                Select a topic to start your Tailwind CSS journey. Master concepts through interactive challenges.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+        <!-- Progress Summary -->
+        <div class="bg-quest-dark rounded-xl p-6 mb-12 border border-gray-700">
+            <h2 class="text-2xl font-bold mb-6 text-center">Your Learning Progress</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                    <div class="inline-flex items-center justify-center relative">
+                        <svg class="w-24 h-24" viewBox="0 0 36 36">
+                            <path d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="#374151" stroke-width="3" />
+                            <path d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none" stroke="#10B981" stroke-width="3" 
+                                stroke-dasharray="70, 100" class="progress-ring" id="overallProgressRing" />
+                        </svg>
+                        <span class="absolute text-xl font-bold" id="overallProgressText">25%</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mt-2">Overall Completion</h3>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-quest-accent" id="conceptsMastered">35</div>
+                    <h3 class="text-lg font-semibold mt-2">Concepts Mastered</h3>
+                    <p class="text-sm text-gray-400">Out of <span id="totalConcepts">32</span> total</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-quest-primary" id="challengesCompleted">12</div>
+                    <h3 class="text-lg font-semibold mt-2">Challenges Completed</h3>
+                    <p class="text-sm text-gray-400">Keep going!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Topics Grid -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold mb-8 text-center">Learning Topics</h2>
+            
+            <!-- Foundations Category -->
+            <div class="category-header rounded-xl p-5 mb-6">
+                <h3 class="text-2xl font-bold flex items-center">
+                    <span class="bg-white text-quest-primary p-2 rounded-lg mr-3">🔰</span>
+                    Foundation Concepts
+                </h3>
+                <p class="text-gray-100 mt-2">Start with the basics to build a solid understanding of Tailwind CSS</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="topic-card quest-card rounded-xl p-6 border border-gray-700" data-topic="Spacing Basics">
+                    <div class="text-center mb-4">
+                        <div class="text-4xl mb-2">📏</div>
+                        <h4 class="font-bold text-lg mb-2">Spacing & Layout</h4>
+                        <div class="text-sm text-gray-300 mb-3">Padding, margin, sizing</div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Progress</span>
+                            <span id="spacing-progress-text">0/4</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-quest-secondary h-2 rounded-full" id="spacing-progress-bar" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-quest-secondary hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn" data-topic="Spacing Basics">
+                        Continue Learning
+                    </button>
+                </div>
+                
+                <div class="topic-card quest-card rounded-xl p-6 border border-gray-700" data-topic="Colors & Backgrounds">
+                    <div class="text-center mb-4">
+                        <div class="text-4xl mb-2">🎨</div>
+                        <h4 class="font-bold text-lg mb-2">Colors & Backgrounds</h4>
+                        <div class="text-sm text-gray-300 mb-3">Text, bg, border colors</div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Progress</span>
+                            <span id="colors-progress-text">0/4</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-quest-secondary h-2 rounded-full" id="colors-progress-bar" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-quest-secondary hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn" data-topic="Colors & Backgrounds">
+                        Continue Learning
+                    </button>
+                </div>
+                
+                <div class="topic-card quest-card rounded-xl p-6 border border-gray-700" data-topic="Typography">
+                    <div class="text-center mb-4">
+                        <div class="text-4xl mb-2">✨</div>
+                        <h4 class="font-bold text-lg mb-2">Typography</h4>
+                        <div class="text-sm text-gray-300 mb-3">Text styling & formatting</div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Progress</span>
+                            <span id="typography-progress-text">0/4</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-quest-secondary h-2 rounded-full" id="typography-progress-bar" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-quest-secondary hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn" data-topic="Typography">
+                        Start Learning
+                    </button>
+                </div>
+                
+                <div class="topic-card quest-card rounded-xl p-6 border border-gray-700" data-topic="Transitions & Animation">
+                    <div class="text-center mb-4">
+                        <div class="text-4xl mb-2">🔄</div>
+                        <h4 class="font-bold text-lg mb-2">Transitions & Animation</h4>
+                        <div class="text-sm text-gray-300 mb-3">Hover effects, transitions</div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Progress</span>
+                            <span id="transitions-progress-text">0/4</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-gray-600 h-2 rounded-full" id="transitions-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-quest-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn" data-topic="Transitions & Animation">
+                        Start Learning
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Layout Category -->
+            <div class="category-header rounded-xl p-5 mb-6">
+                <h3 class="text-2xl font-bold flex items-center">
+                    <span class="bg-white text-quest-primary p-2 rounded-lg mr-3">📐</span>
+                    Layout & Structure
+                </h3>
+                <p class="text-gray-100 mt-2">Learn how to create responsive layouts and structure your designs</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="topic-card quest-card rounded-xl p-6 border border-gray-700" data-topic="Flexbox">
+                    <div class="text-center mb-4">
+                        <div class="text-4xl mb-2">📦</div>
+                        <h4 class="font-bold text-lg mb-2">Flexbox</h4>
+                        <div class="text-sm text-gray-300 mb-3">Alignment, direction, wrapping</div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Progress</span>
+                            <span id="flexbox-progress-text">0/5</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-gray-600 h-2 rounded-full" id="flexbox-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-quest-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn" data-topic="Flexbox">
+                        Start Learning
+                    </button>
+                </div>
+                
+                <div class="topic-card quest-card rounded-xl p-6 border border-gray-700" data-topic="CSS Grid">
+                    <div class="text-center mb-4">
+                        <div class="text-4xl mb-2">🔲</div>
+                        <h4 class="font-bold text-lg mb-2">CSS Grid</h4>
+                        <div class="text-sm text-gray-300 mb-3">Columns, rows, placement</div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Progress</span>
+                            <span id="grid-progress-text">0/5</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-gray-600 h-2 rounded-full" id="grid-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-quest-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn" data-topic="CSS Grid">
+                        Start Learning
+                    </button>
+                </div>
+                
+                <div class="topic-card quest-card rounded-xl p-6 border border-gray-700" data-topic="Responsive Design">
+                    <div class="text-center mb-4">
+                        <div class="text-4xl mb-2">📱</div>
+                        <h4 class="font-bold text-lg mb-2">Responsive Design</h4>
+                        <div class="text-sm text-gray-300 mb-3">Breakpoints, mobile-first</div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Progress</span>
+                            <span id="responsive-progress-text">0/5</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-gray-600 h-2 rounded-full" id="responsive-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-quest-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn" data-topic="Responsive Design">
+                        Start Learning
+                    </button>
+                </div>
+                
+                <div class="topic-card quest-card rounded-xl p-6 border border-gray-700" data-topic="Component Layouts">
+                    <div class="text-center mb-4">
+                        <div class="text-4xl mb-2">🧩</div>
+                        <h4 class="font-bold text-lg mb-2">Component Layouts</h4>
+                        <div class="text-sm text-gray-300 mb-3">Cards, navbars, forms</div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs text-gray-400 mb-1">
+                            <span>Progress</span>
+                            <span id="component-progress-text">0/5</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-gray-600 h-2 rounded-full" id="component-progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button class="w-full bg-quest-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn" data-topic="Component Layouts">
+                        Start Learning
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendation Section -->
+        <div class="bg-quest-dark rounded-xl p-8 border border-gray-700">
+            <h2 class="text-2xl font-bold mb-4">Recommended Next Step</h2>
+            <div class="flex flex-col md:flex-row items-center md:items-start">
+                <div class="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
+                    <div class="w-16 h-16 bg-quest-secondary rounded-full flex items-center justify-center text-2xl" id="recommended-icon">
+                        📏
+                    </div>
+                </div>
+                <div class="flex-grow">
+                    <h3 class="text-xl font-semibold mb-2" id="recommended-topic">Spacing & Layout</h3>
+                    <p class="text-gray-300 mb-4" id="recommended-description">
+                        Based on your current progress, we recommend continuing with Spacing & Layout concepts. 
+                        You've completed 75% of this topic - finish it to unlock the next level!
+                    </p>
+                    <button class="bg-quest-secondary hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition-colors start-topic-btn" id="recommended-button" data-topic="Spacing Basics">
+                        Continue Learning
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Width Footer -->
+    <footer class="full-width-container bg-quest-dark text-gray-400 border-t border-gray-700 mt-16">
+        <div class="w-full px-6 py-10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
+                
+                <!-- Brand Info -->
+                <div>
+                    <div class="flex items-center justify-center md:justify-start space-x-2 mb-2">
+                        <img src="./img/logo.png" alt="Tailwind Quest Logo" class="logo-img">
+                        <h2 class="text-xl font-bold text-quest-primary">Tailwind Quest</h2>
+                    </div>
+                    <p class="text-sm">
+                        Making Tailwind CSS learning fun, interactive, and rewarding.
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-3">Quick Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="./index.html" class="hover:text-quest-primary transition">Home</a></li>
+                        <li><a href="./about.html" class="hover:text-quest-primary transition">About Us</a></li>
+                        <li><a href="./contactus.html" class="hover:text-quest-primary transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social / Contact -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-3">Follow Us</h3>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        
+                        <!-- Facebook -->
+                        <a href="#" class="social-icon bg-gray-700 hover:bg-blue-600 p-3 rounded-full transition transform hover:-translate-y-1">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        
+                        <!-- GitHub -->
+                        <a href="https://github.com/anjalbhattarai79/Tailwind-Quest.git" target="_blank"
+                            class="social-icon bg-gray-700 hover:bg-gray-800 p-3 rounded-full transition transform hover:-translate-y-1">
+                            <i class="fab fa-github text-white"></i>
+                        </a>
+                        
+                        <!-- Dribbble -->
+                        <a href="#" class="social-icon bg-gray-700 hover:bg-pink-600 p-3 rounded-full transition transform hover:-translate-y-1">
+                            <i class="fab fa-dribbble text-white"></i>
+                        </a>
+                        
+                        <!-- LinkedIn -->
+                        <a href="#" class="social-icon bg-gray-700 hover:bg-blue-700 p-3 rounded-full transition transform hover:-translate-y-1">
+                            <i class="fab fa-linkedin-in text-white"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="w-full text-center text-sm text-gray-500 border-t border-gray-700 py-4">
+            © 2025 Tailwind Quest — Built with Tailwind CSS
+        </div>
+    </footer>
+
+    <script>
+        // Progress tracking system
+        class ProgressTracker {
+            constructor() {
+                this.topics = {
+                    'Spacing Basics': { completed: 0, total: 3},
+                    'Colors & Backgrounds': { completed: 0, total: 4 },
+                    'Typography': { completed: 0, total: 4 },
+                    'Transitions & Animation': { completed: 0, total: 4 },
+                    'Flexbox': { completed: 0, total: 5 },
+                    'CSS Grid': { completed: 0, total: 5 },
+                    'Responsive Design': { completed: 0, total: 5 },
+                    'Component Layouts': { completed: 0, total: 5 }
+                };
+                this.totalConcepts = 35;
+                this.totalChallenges = 0;
+                Object.values(this.topics).forEach(topic => {
+                    this.totalChallenges += topic.total;
+                });
+                
+                this.loadProgress();
+                this.updateUI();
+            }
+            
+            // Load progress from localStorage
+            loadProgress() {
+                const savedProgress = localStorage.getItem('tailwindQuestProgress');
+                if (savedProgress) {
+                    try {
+                        const progress = JSON.parse(savedProgress);
+                        for (const topic in progress) {
+                            if (this.topics[topic]) {
+                                this.topics[topic].completed = progress[topic].completed;
+                            }
+                        }
+                    } catch (e) {
+                        console.error('Error loading progress:', e);
+                    }
+                }
+            }
+            
+            // Save progress to localStorage
+            saveProgress() {
+                localStorage.setItem('tailwindQuestProgress', JSON.stringify(this.topics));
+            }
+            
+            // Update a topic's progress
+            updateTopicProgress(topic, completed) {
+                if (this.topics[topic]) {
+                    this.topics[topic].completed = Math.max(0, Math.min(completed, this.topics[topic].total));
+                    this.saveProgress();
+                    this.updateUI();
+                }
+            }
+            
+            // Increment a topic's progress
+            completeChallenge(topic) {
+                if (this.topics[topic] && this.topics[topic].completed < this.topics[topic].total) {
+                    this.topics[topic].completed++;
+                    this.saveProgress();
+                    this.updateUI();
+                    return true;
+                }
+                return false;
+            }
+            
+            // Calculate overall progress
+            getOverallProgress() {
+                let completed = 0;
+                let total = 0;
+                
+                for (const topic in this.topics) {
+                    completed += this.topics[topic].completed;
+                    total += this.topics[topic].total;
+                }
+                
+                return total > 0 ? Math.round((completed / total) * 100) : 0;
+            }
+            
+            // Get total concepts mastered
+            getConceptsMastered() {
+                let mastered = 0;
+                for (const topic in this.topics) {
+                    mastered += this.topics[topic].completed;
+                }
+                return mastered;
+            }
+            
+            // Get total challenges completed
+            getChallengesCompleted() {
+                return this.getConceptsMastered(); // Same as concepts for now
+            }
+            
+            // Get recommended topic
+            getRecommendedTopic() {
+                // Find the topic with the highest progress that's not completed
+                let recommendedTopic = null;
+                let highestProgress = -1;
+                
+                for (const topic in this.topics) {
+                    const progress = this.topics[topic].completed / this.topics[topic].total;
+                    if (progress < 1 && progress > highestProgress) {
+                        highestProgress = progress;
+                        recommendedTopic = topic;
+                    }
+                }
+                
+                // If all topics are completed or no progress, recommend the first one
+                if (!recommendedTopic) {
+                    recommendedTopic = Object.keys(this.topics)[0];
+                }
+                
+                return recommendedTopic;
+            }
+            
+            // Update the UI with current progress
+            updateUI() {
+                // Update overall progress
+                const overallProgress = this.getOverallProgress();
+                document.getElementById('overallProgressText').textContent = `${overallProgress}%`;
+                document.getElementById('overallProgressRing').setAttribute('stroke-dasharray', `${overallProgress}, 100`);
+                
+                // Update stats
+                document.getElementById('conceptsMastered').textContent = this.getConceptsMastered();
+                document.getElementById('challengesCompleted').textContent = this.getChallengesCompleted();
+                document.getElementById('totalConcepts').textContent = this.totalConcepts;
+                
+                // Update each topic's progress
+                const topicIdMap = {
+                    "Spacing Basics": "spacing",
+                    "Colors & Backgrounds": "colors",
+                    "Typography": "typography",
+                    "Transitions & Animation": "transitions",
+                    "Flexbox": "flexbox",
+                    "CSS Grid": "grid",
+                    "Responsive Design": "responsive",
+                    "Component Layouts": "component"
+                };
+                for (const topic in this.topics) {
+                    const progress = this.topics[topic];
+                    const percentage = progress.total > 0 ? Math.round((progress.completed / progress.total) * 100) : 0;
+                    const topicId = topicIdMap[topic];
+                    const progressText = document.getElementById(`${topicId}-progress-text`);
+                    const progressBar = document.getElementById(`${topicId}-progress-bar`);
+                    if (progressText) {
+                        progressText.textContent = `${progress.completed}/${progress.total}`;
+                    }
+                    if (progressBar) {
+                        progressBar.style.width = `${percentage}%`;
+                        // Update color based on progress
+                        if (percentage === 0) {
+                            progressBar.className = 'bg-gray-600 h-2 rounded-full';
+                        } else if (percentage < 100) {
+                            progressBar.className = 'bg-quest-secondary h-2 rounded-full';
+                        } else {
+                            progressBar.className = 'bg-quest-accent h-2 rounded-full';
+                        }
+                    }
+                    // Update button text based on progress
+                    const buttons = document.querySelectorAll(`.start-topic-btn[data-topic="${topic}"]`);
+                    buttons.forEach(button => {
+                        if (progress.completed === 0) {
+                            button.textContent = 'Start Learning';
+                            button.className = 'w-full bg-quest-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn';
+                        } else if (progress.completed < progress.total) {
+                            button.textContent = 'Continue Learning';
+                            button.className = 'w-full bg-quest-secondary hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn';
+                        } else {
+                            button.textContent = 'Review Topic';
+                            button.className = 'w-full bg-quest-accent hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg transition-colors start-topic-btn';
+                        }
+                    });
+                }
+                
+                // Update recommended topic
+                const recommendedTopic = this.getRecommendedTopic();
+                const recommendedData = {
+                    'Spacing Basics': { icon: '📏', description: 'Based on your current progress, we recommend continuing with Spacing & Layout concepts.' },
+                    'Colors & Backgrounds': { icon: '🎨', description: 'Colors & Backgrounds would be a great next step based on your learning pattern.' },
+                    'Typography': { icon: '✨', description: 'Typography is recommended to enhance your text styling skills.' },
+                    'Transitions & Animation': { icon: '🔄', description: 'Try Transitions & Animation to make your designs more interactive.' },
+                    'Flexbox': { icon: '📦', description: 'Flexbox is essential for modern layout design - a recommended next step.' },
+                    'CSS Grid': { icon: '🔲', description: 'CSS Grid would complement your current knowledge well.' },
+                    'Responsive Design': { icon: '📱', description: 'Responsive Design is crucial for modern web development.' },
+                    'Component Layouts': { icon: '🧩', description: 'Component Layouts will help you build complete interfaces.' }
+                };
+                
+                if (recommendedTopic && recommendedData[recommendedTopic]) {
+                    document.getElementById('recommended-icon').textContent = recommendedData[recommendedTopic].icon;
+                    document.getElementById('recommended-topic').textContent = recommendedTopic;
+                    document.getElementById('recommended-description').textContent = recommendedData[recommendedTopic].description;
+                    document.getElementById('recommended-button').setAttribute('data-topic', recommendedTopic);
+                    
+                    // Update button text based on progress
+                    const progress = this.topics[recommendedTopic];
+                    if (progress.completed === 0) {
+                        document.getElementById('recommended-button').textContent = 'Start Learning';
+                    } else if (progress.completed < progress.total) {
+                        document.getElementById('recommended-button').textContent = 'Continue Learning';
+                    } else {
+                        document.getElementById('recommended-button').textContent = 'Review Topic';
+                    }
+                }
+            }
+            
+            // Export progress as JSON (for backup)
+            exportProgress() {
+                const data = {
+                    progress: this.topics,
+                    exportedAt: new Date().toISOString()
+                };
+                return JSON.stringify(data, null, 2);
+            }
+            
+            // Import progress from JSON
+            importProgress(json) {
+                try {
+                    const data = JSON.parse(json);
+                    if (data.progress) {
+                        for (const topic in data.progress) {
+                            if (this.topics[topic]) {
+                                this.topics[topic].completed = data.progress[topic].completed;
+                            }
+                        }
+                        this.saveProgress();
+                        this.updateUI();
+                        return true;
+                    }
+                } catch (e) {
+                    console.error('Error importing progress:', e);
+                }
+                return false;
+            }
+            
+            // Reset all progress
+            resetProgress() {
+                if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                    for (const topic in this.topics) {
+                        this.topics[topic].completed = 0;
+                    }
+                    this.saveProgress();
+                    this.updateUI();
+                }
+            }
+        }
+
+        // Initialize the progress tracker
+        const progressTracker = new ProgressTracker();
+
+        // Topic selection functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const topicCards = document.querySelectorAll('.topic-card');
+            const startButtons = document.querySelectorAll('.start-topic-btn');
+            
+            // Handle topic card selection
+            topicCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selection from all cards
+                    topicCards.forEach(c => c.classList.remove('selected'));
+                    // Add selection to clicked card
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Handle start learning buttons
+            startButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent triggering the card click event
+                    let topic = this.getAttribute('data-topic');
+                    if (topic) {
+                        // Redirect to game page with topic parameter
+                        window.location.href = `game.html?topic=${encodeURIComponent(topic)}`;
+                    }
+                });
+            });
+            
+            // Add debug buttons for testing (remove in production)
+            const debugDiv = document.createElement('div');
+            debugDiv.className = 'fixed bottom-4 right-4 bg-quest-dark p-3 rounded-lg border border-gray-700 z-50 hidden';
+            debugDiv.innerHTML = `
+                <div class="text-sm font-bold mb-2">Debug Tools</div>
+                <button id="debugAddProgress" class="bg-quest-primary text-white p-1 rounded text-xs mr-1">+ Progress</button>
+                <button id="debugReset" class="bg-red-500 text-white p-1 rounded text-xs">Reset All</button>
+            `;
+            document.body.appendChild(debugDiv);
+            
+            // Show debug buttons when holding Shift+D
+            document.addEventListener('keydown', function(e) {
+                if (e.shiftKey && e.key === 'D') {
+                    debugDiv.classList.toggle('hidden');
+                }
+            });
+            
+            document.getElementById('debugAddProgress').addEventListener('click', function() {
+                const topic = progressTracker.getRecommendedTopic();
+                progressTracker.completeChallenge(topic);
+            });
+            
+            document.getElementById('debugReset').addEventListener('click', function() {
+                progressTracker.resetProgress();
+            });
+        });
+    </script>
+</body>
+</html>

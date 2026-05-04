@@ -4,6 +4,7 @@ public class User {
     
     // Fields
     private int userId;
+    private String displayId;
     private String username;
     private String email;
     private String password;
@@ -13,7 +14,9 @@ public class User {
     private String address;
     private String dateOfBirth;
     private String registeredAt;
-    private String lastLoggedIn;
+    
+
+	private String lastLoggedIn;
     
     // Default Constructor
     public User() {
@@ -33,6 +36,10 @@ public class User {
     public int getUserId() {
         return userId;
     }
+    
+    public String getDisplayId() {
+		return displayId;
+	}
     
     public String getUsername() {
         return username;
@@ -73,11 +80,16 @@ public class User {
     public String getLastLoggedIn() {
         return lastLoggedIn;
     }
-    
+
+	
     // Setters
     public void setUserId(int userId) {
         this.userId = userId;
     }
+    
+    public void setDisplayId(String displayId) {
+		this.displayId = displayId;
+	}
     
     public void setUsername(String username) {
         this.username = username;
