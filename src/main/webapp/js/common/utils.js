@@ -13,7 +13,7 @@
 function showToast(message, type = 'success') {
     // Try to get existing toast or create one
     let toast = document.getElementById('toast');
-    
+
     if (!toast) {
         // Create toast element if it doesn't exist
         toast = document.createElement('div');
@@ -26,7 +26,7 @@ function showToast(message, type = 'success') {
             </div>
         `;
         document.body.appendChild(toast);
-        
+
         // Add styles if not already in CSS
         if (!document.querySelector('#toast-styles')) {
             const style = document.createElement('style');
@@ -93,26 +93,26 @@ function showToast(message, type = 'success') {
             document.head.appendChild(style);
         }
     }
-    
+
     const toastIcon = document.getElementById('toastIcon');
     const toastMessage = document.getElementById('toastMessage');
-    
+
     // Set icon based on type
     let icon = 'check_circle';
     if (type === 'error') icon = 'error';
     if (type === 'warning') icon = 'warning';
-    
+
     if (toastIcon) toastIcon.textContent = icon;
     if (toastMessage) toastMessage.textContent = message;
-    
+
     // Remove existing classes and add new type
     toast.classList.remove('success', 'error', 'warning');
     toast.classList.add(type);
-    
+
     // Show toast
     toast.style.display = 'block';
     toast.style.animation = 'slideIn 0.3s ease';
-    
+
     // Auto hide after 3 seconds
     setTimeout(() => {
         toast.style.animation = 'fadeOut 0.3s ease';
@@ -149,14 +149,14 @@ function escapeHtml(str) {
  */
 function formatDate(dateString, includeTime = true) {
     if (!dateString) return 'Never';
-    
+
     try {
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return dateString;
-        
+
         const datePart = date.toLocaleDateString();
         if (!includeTime) return datePart;
-        
+
         const timePart = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         return `${datePart} ${timePart}`;
     } catch (e) {
@@ -235,7 +235,7 @@ function validatePassword(password) {
  */
 function showConfirm(message, title, onConfirm) {
     let modal = document.getElementById('confirmModal');
-    
+
     if (!modal) {
         // Create modal if it doesn't exist
         modal = document.createElement('div');
@@ -258,7 +258,7 @@ function showConfirm(message, title, onConfirm) {
             </div>
         `;
         document.body.appendChild(modal);
-        
+
         // Add modal styles if not present
         if (!document.querySelector('#modal-styles')) {
             const style = document.createElement('style');
@@ -318,16 +318,16 @@ function showConfirm(message, title, onConfirm) {
             document.head.appendChild(style);
         }
     }
-    
+
     const titleEl = document.getElementById('confirmTitle');
     const messageEl = document.getElementById('confirmMessage');
     const okBtn = document.getElementById('confirmOkBtn');
-    
+
     if (titleEl) titleEl.textContent = title || 'Confirm Action';
     if (messageEl) messageEl.textContent = message;
-    
+
     modal.style.display = 'flex';
-    
+
     // Remove old listener and add new one
     const newOkBtn = okBtn.cloneNode(true);
     okBtn.parentNode.replaceChild(newOkBtn, okBtn);
@@ -357,7 +357,7 @@ function showButtonLoading(button, text = 'Loading...') {
     button.disabled = true;
     button.dataset.originalText = button.innerHTML;
     button.innerHTML = `<span class="material-symbols-outlined" style="animation: spin 1s linear infinite;">progress_activity</span> ${text}`;
-    
+
     // Add spin animation if not present
     if (!document.querySelector('#spin-style')) {
         const style = document.createElement('style');
@@ -421,4 +421,64 @@ function debounce(func, delay) {
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(this, args), delay);
     };
+}
+
+/**
+ * Profile Dropdown Functionality
+ */
+function initProfileDropdown() {
+    const trigger = document.getElementById('profileTrigger');
+    const dropdown = document.getElementById('dropdownMenu');
+
+    if (!trigger || !dropdown) {
+        return;
+    }
+
+    function closeDropdown() {
+        dropdown.classList.remove('show');
+        trigger.classList.remove('active');
+    }
+
+    function openDropdown() {
+        dropdown.classList.add('show');
+        trigger.classList.add('active');
+    }
+
+    // Toggle on click
+    trigger.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (dropdown.classList.contains('show')) {
+            closeDropdown();
+        } else {
+            openDropdown();
+        }
+    });
+
+    // Close when clicking anywhere else on the page
+    document.addEventListener('click', function(e) {
+        if (!trigger.contains(e.target) && !dropdown.contains(e.target)) {
+            closeDropdown();
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && dropdown.classList.contains('show')) {
+            closeDropdown();
+        }
+    });
+}
+
+// Initialize
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProfileDropdown);
+} else {
+    initProfileDropdown();
+}
+
+// Initialize dropdown when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProfileDropdown);
+} else {
+    initProfileDropdown();
 }

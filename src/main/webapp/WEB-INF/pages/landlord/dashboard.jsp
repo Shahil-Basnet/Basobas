@@ -328,7 +328,8 @@
 			</a> <a href="${pageContext.request.contextPath}/landlord/properties"
 				class="nav-link"> <span class="material-symbols-outlined">real_estate_agent</span>
 				<span>My Properties</span>
-			</a> <a href="${pageContext.request.contextPath}/landlord/add-property"
+			</a> <a
+				href="${pageContext.request.contextPath}/landlord/properties?action=add"
 				class="nav-link"> <span class="material-symbols-outlined">add_business</span>
 				<span>Add Property</span>
 			</a> <a
@@ -361,21 +362,7 @@
 	<!-- MAIN CONTENT -->
 	<main class="main-content">
 		<!-- Top Bar -->
-		<div class="top-bar">
-			<div class="search-wrapper">
-				<span class="material-symbols-outlined">search</span> <input
-					type="text" placeholder="Search properties or tenants...">
-			</div>
-			<div class="admin-badge">
-				<button class="icon-btn">
-					<span class="material-symbols-outlined">notifications_none</span>
-				</button>
-				<button class="icon-btn">
-					<span class="material-symbols-outlined">settings</span>
-				</button>
-				<div class="admin-name">Landlord</div>
-			</div>
-		</div>
+		<jsp:include page="/WEB-INF/includes/topbar.jsp" />
 
 		<div class="dashboard-container">
 			<!-- Welcome Section -->
@@ -491,10 +478,10 @@
 				<div class="quick-actions">
 					<h3>Quick Actions</h3>
 					<div class="actions-grid">
-						<button class="action-btn primary">
+						<a href="${pageContext.request.contextPath}/landlord/properties?action=add" class="action-btn primary" style="text-decoration: none;">
 							<span class="material-symbols-outlined">add_business</span> Add
 							New Property
-						</button>
+						</a>
 						<button class="action-btn secondary">
 							<span class="material-symbols-outlined">add_a_photo</span> Manage
 							Photos

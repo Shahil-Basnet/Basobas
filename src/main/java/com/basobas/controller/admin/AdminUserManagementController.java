@@ -28,26 +28,11 @@ public class AdminUserManagementController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		handleList(request, response);
 	}
 
 	private void handleList(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		// Check if admin is logged in
-		// HttpSession session = request.getSession(false);
-		// if (session == null || session.getAttribute("loggedInUser") == null) {
-		// response.sendRedirect(request.getContextPath() + "/login");
-		// return;
-		// }
-
-		// User loggedInUser = (User) session.getAttribute("loggedInUser");
-		// if (!"admin".equals(loggedInUser.getRole())) {
-		// response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied. Admin
-		// only.");
-		// return;
-		// }
 
 		String format = request.getParameter("format");
 		String search = request.getParameter("search");
@@ -59,13 +44,13 @@ public class AdminUserManagementController extends HttpServlet {
 		if (sortOrder == null)
 			sortOrder = "DESC";
 
-        int page = 1;
-        try {
-            page = Integer.parseInt(request.getParameter("page"));
-        } catch (Exception e) {
-        }
-        int limit = 5;
-        int offset = (page - 1) * limit;
+		int page = 1;
+		try {
+			page = Integer.parseInt(request.getParameter("page"));
+		} catch (Exception e) {
+		}
+		int limit = 5;
+		int offset = (page - 1) * limit;
 
 		List<User> users = userDAO.getUsersFiltered(search, role, offset, limit, sortBy, sortOrder);
 		int total = userDAO.countUsersFiltered(search, role);
@@ -156,28 +141,30 @@ public class AdminUserManagementController extends HttpServlet {
 		String action = request.getParameter("action");
 
 		if ("delete".equals(action)) {
-		    String displayId = request.getParameter("displayId");
+			String displayId = request.getParameter("displayId");
 
-		    // Find user by display_id first
-		    User user = userDAO.findByDisplayId(displayId);
-		    if (user != null && !"admin".equals(user.getRole())) {
-		        // Don't allow deleting other admins
-		        userDAO.delete(user.getUserId());
-		    }
+			// Find user by display_id first
+			User user = userDAO.findByDisplayId(displayId);
+			if (user != null && !"admin".equals(user.getRole())) {
+				// Don't allow deleting other admins
+				userDAO.delete(user.getUserId());
+			}
 		} else if ("resetPassword".equals(action)) {
-		    String displayId = request.getParameter("displayId");
-		    User user = userDAO.findByDisplayId(displayId);
-		    if (user != null) {
-		        // Reset to default password
-		        String defaultPassword = "Basobas@123";
-		        String hashedPassword = BCrypt.hashpw(defaultPassword, BCrypt.gensalt());
-		        userDAO.changePassword(user.getUserId(), hashedPassword);
+			String displayId = request.getParameter("displayId");
+			User user = userDAO.findByDisplayId(displayId);
+			if (user != null) {
+				// Reset to default password
+				String defaultPassword = "Basobas@123";
+				String hashedPassword = BCrypt.hashpw(defaultPassword, BCrypt.gensalt());
+				userDAO.changePassword(user.getUserId(), hashedPassword);
 
-		        // Add success message to session to show on redirect
-		        request.getSession().setAttribute("message", "Password for " + user.getUsername() + " has been reset to: " + defaultPassword);
-		        request.getSession().setAttribute("messageType", "success");
-		    }
-		} else if ("bulkDelete".equals(action)) {			String[] displayIds = request.getParameterValues("displayIds");
+				// Add success message to session to show on redirect
+				request.getSession().setAttribute("message",
+						"Password for " + user.getUsername() + " has been reset to: " + defaultPassword);
+				request.getSession().setAttribute("messageType", "success");
+			}
+		} else if ("bulkDelete".equals(action)) {
+			String[] displayIds = request.getParameterValues("displayIds");
 			if (displayIds != null) {
 				for (String displayId : displayIds) {
 					User user = userDAO.findByDisplayId(displayId);

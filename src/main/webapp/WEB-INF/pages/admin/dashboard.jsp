@@ -84,18 +84,7 @@
 
 	<!-- MAIN CONTENT -->
 	<main class="main-content">
-		<div class="top-bar">
-			<div class="search-wrapper">
-				<span class="material-symbols-outlined">search</span> <input
-					type="text" placeholder="Search properties, users...">
-			</div>
-			<div class="admin-badge">
-				<button class="icon-btn">
-					<span class="material-symbols-outlined">notifications_none</span>
-				</button>
-				<div class="admin-name">Admin</div>
-			</div>
-		</div>
+		<jsp:include page="/WEB-INF/includes/topbar.jsp" />
 
 		<div class="dashboard-container">
 			<!-- Welcome -->
@@ -290,6 +279,12 @@
 	<button class="fab" aria-label="Quick add">
 		<span class="material-symbols-outlined">add</span>
 	</button>
+
+	<!-- Scripts -->
+	<script>
+		window.contextPath = '${pageContext.request.contextPath}';
+	</script>
+	<script src="${pageContext.request.contextPath}/js/common/utils.js"></script>
 
 </body>
 </html>

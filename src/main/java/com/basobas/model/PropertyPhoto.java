@@ -1,5 +1,7 @@
 package com.basobas.model;
 
+import java.sql.Timestamp;
+
 public class PropertyPhoto {
 	private int photoId;
 	private int propertyId;
@@ -7,21 +9,22 @@ public class PropertyPhoto {
 	private boolean isPrimary;
 	private String caption;
 	private int displayOrder;
-	private String uploadedAt;
+	private Timestamp uploadedAt;
 
-	// Default constructor
+	// Constructors
 	public PropertyPhoto() {
-		this.isPrimary = false;
-		this.displayOrder = 0;
 	}
 
-	// Constructor
-	public PropertyPhoto(int propertyId, String photoUrl, boolean isPrimary, String caption) {
+	public PropertyPhoto(int propertyId, String photoUrl, boolean isPrimary, int displayOrder) {
 		this.propertyId = propertyId;
 		this.photoUrl = photoUrl;
 		this.isPrimary = isPrimary;
+		this.displayOrder = displayOrder;
+	}
+
+	public PropertyPhoto(int propertyId, String photoUrl, boolean isPrimary, int displayOrder, String caption) {
+		this(propertyId, photoUrl, isPrimary, displayOrder);
 		this.caption = caption;
-		this.displayOrder = 0;
 	}
 
 	// Getters and Setters
@@ -53,8 +56,8 @@ public class PropertyPhoto {
 		return isPrimary;
 	}
 
-	public void setPrimary(boolean primary) {
-		isPrimary = primary;
+	public void setPrimary(boolean isPrimary) {
+		this.isPrimary = isPrimary;
 	}
 
 	public String getCaption() {
@@ -73,11 +76,25 @@ public class PropertyPhoto {
 		this.displayOrder = displayOrder;
 	}
 
-	public String getUploadedAt() {
+	public Timestamp getUploadedAt() {
 		return uploadedAt;
 	}
 
-	public void setUploadedAt(String uploadedAt) {
+	public void setUploadedAt(Timestamp uploadedAt) {
 		this.uploadedAt = uploadedAt;
+	}
+
+	// Helper method to get full URL for JSP
+	public String getFullPhotoUrl() {
+		if (photoUrl != null && photoUrl.startsWith("/")) {
+			return photoUrl;
+		}
+		return "/uploads/properties/" + photoUrl;
+	}
+
+	@Override
+	public String toString() {
+		return "PropertyPhoto [photoId=" + photoId + ", propertyId=" + propertyId + ", isPrimary=" + isPrimary
+				+ ", displayOrder=" + displayOrder + "]";
 	}
 }

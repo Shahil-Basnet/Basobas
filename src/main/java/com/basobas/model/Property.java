@@ -1,63 +1,42 @@
 package com.basobas.model;
 
-import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Property {
-
-	// Primary fields
 	private int propertyId;
 	private String displayId;
 	private String title;
 	private String description;
 	private int landlordId;
 	private String landlordName;
-
-	// Property details
 	private String propertyType; // apartment, house, condo, studio, room, flat, basement
 	private int bedrooms;
 	private double bathrooms;
 	private double monthlyRent;
 	private double securityDeposit;
-
-	// Location details (Nepal specific)
 	private String city;
 	private String address;
-	private int wardNumber;
-	private int floorNumber;
-
-	// Nepal specific features
+	private Integer wardNumber;
+	private Integer floorNumber;
 	private String roadAccess; // 2w, 4w, both, none
 	private String waterSource; // municipal, tanker, well, borewell
-	private int powerBackupHours;
+	private Integer powerBackupHours;
 
-	// Status
 	private String status; // available, rented, maintenance, inactive
-	private String availableFrom;
+	private java.sql.Date availableFrom;
+	private Timestamp createdAt;
+	private Timestamp updatedAt;
+	private Integer currentTenantId;
+	private LocalDate currentLeaseStart;
+	private LocalDate currentLeaseEnd;
 
-	// Timestamps
-	private String createdAt;
-	private String updatedAt;
-
-	// Related data (not stored in DB, filled by queries)
-	private List<PropertyPhoto> photos;
-	private List<String> amenities;
-
-	// Default constructor
+	// Constructors
 	public Property() {
-		this.propertyType = "apartment";
-		this.bedrooms = 1;
-		this.bathrooms = 1.0;
-		this.status = "available";
-		this.roadAccess = "both";
-		this.waterSource = "municipal";
-		this.powerBackupHours = 0;
-		this.securityDeposit = 0.0;
 	}
 
-	// Constructor for creating new property
 	public Property(String title, String description, int landlordId, String landlordName, String propertyType,
-			int bedrooms, double bathrooms, double monthlyRent, double securityDeposit, String city, String address,
-			int wardNumber, int floorNumber, String roadAccess, String waterSource, int powerBackupHours) {
+			int bedrooms, double bathrooms, double monthlyRent, double securityDeposit, String city, String address) {
 		this.title = title;
 		this.description = description;
 		this.landlordId = landlordId;
@@ -69,16 +48,10 @@ public class Property {
 		this.securityDeposit = securityDeposit;
 		this.city = city;
 		this.address = address;
-		this.wardNumber = wardNumber;
-		this.floorNumber = floorNumber;
-		this.roadAccess = roadAccess;
-		this.waterSource = waterSource;
-		this.powerBackupHours = powerBackupHours;
 		this.status = "available";
 	}
 
-	// ========== Getters and Setters ==========
-
+	// Getters and Setters
 	public int getPropertyId() {
 		return propertyId;
 	}
@@ -151,6 +124,30 @@ public class Property {
 		this.bathrooms = bathrooms;
 	}
 
+	public Integer getCurrentTenantId() {
+		return currentTenantId;
+	}
+
+	public void setCurrentTenantId(Integer currentTenantId) {
+		this.currentTenantId = currentTenantId;
+	}
+
+	public LocalDate getCurrentLeaseStart() {
+		return currentLeaseStart;
+	}
+
+	public void setCurrentLeaseStart(LocalDate currentLeaseStart) {
+		this.currentLeaseStart = currentLeaseStart;
+	}
+
+	public LocalDate getCurrentLeaseEnd() {
+		return currentLeaseEnd;
+	}
+
+	public void setCurrentLeaseEnd(LocalDate currentLeaseEnd) {
+		this.currentLeaseEnd = currentLeaseEnd;
+	}
+
 	public double getMonthlyRent() {
 		return monthlyRent;
 	}
@@ -183,19 +180,19 @@ public class Property {
 		this.address = address;
 	}
 
-	public int getWardNumber() {
+	public Integer getWardNumber() {
 		return wardNumber;
 	}
 
-	public void setWardNumber(int wardNumber) {
+	public void setWardNumber(Integer wardNumber) {
 		this.wardNumber = wardNumber;
 	}
 
-	public int getFloorNumber() {
+	public Integer getFloorNumber() {
 		return floorNumber;
 	}
 
-	public void setFloorNumber(int floorNumber) {
+	public void setFloorNumber(Integer floorNumber) {
 		this.floorNumber = floorNumber;
 	}
 
@@ -215,11 +212,11 @@ public class Property {
 		this.waterSource = waterSource;
 	}
 
-	public int getPowerBackupHours() {
+	public Integer getPowerBackupHours() {
 		return powerBackupHours;
 	}
 
-	public void setPowerBackupHours(int powerBackupHours) {
+	public void setPowerBackupHours(Integer powerBackupHours) {
 		this.powerBackupHours = powerBackupHours;
 	}
 
@@ -231,58 +228,57 @@ public class Property {
 		this.status = status;
 	}
 
-	public String getAvailableFrom() {
+	public java.sql.Date getAvailableFrom() {
 		return availableFrom;
 	}
 
-	public void setAvailableFrom(String availableFrom) {
+	public void setAvailableFrom(java.sql.Date availableFrom) {
 		this.availableFrom = availableFrom;
 	}
 
-	public String getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public String getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(String updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<PropertyPhoto> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(List<PropertyPhoto> photos) {
-		this.photos = photos;
-	}
-
-	public List<String> getAmenities() {
-		return amenities;
-	}
-
-	public void setAmenities(List<String> amenities) {
-		this.amenities = amenities;
-	}
-
-	// Helper methods
-	public boolean isAvailable() {
-		return "available".equalsIgnoreCase(this.status);
-	}
-
+	// Helper method to get formatted rent with NPR
 	public String getFormattedRent() {
-		return "रु " + String.format("%,.0f", monthlyRent);
+		return "रू " + String.format("%,.2f", monthlyRent);
+	}
+
+	// Helper method to get full address with ward
+	public String getFullAddress() {
+		StringBuilder sb = new StringBuilder();
+		if (address != null && !address.isEmpty()) {
+			sb.append(address);
+		}
+		if (wardNumber != null && wardNumber > 0) {
+			if (sb.length() > 0)
+				sb.append(", ");
+			sb.append("Ward ").append(wardNumber);
+		}
+		if (city != null && !city.isEmpty()) {
+			if (sb.length() > 0)
+				sb.append(", ");
+			sb.append(city);
+		}
+		return sb.length() > 0 ? sb.toString() : "Address not specified";
 	}
 
 	@Override
 	public String toString() {
-		return "Property [displayId=" + displayId + ", title=" + title + ", city=" + city + ", rent=" + monthlyRent
-				+ "]";
+		return "Property [propertyId=" + propertyId + ", displayId=" + displayId + ", title=" + title + ", city=" + city
+				+ ", monthlyRent=" + monthlyRent + ", status=" + status + "]";
 	}
 }

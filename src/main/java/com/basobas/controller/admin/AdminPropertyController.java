@@ -28,18 +28,6 @@ public class AdminPropertyController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// Check if admin is logged in
-		HttpSession session = request.getSession(false);
-		if (session == null || session.getAttribute("loggedInUser") == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-			return;
-		}
-
-		User loggedInUser = (User) session.getAttribute("loggedInUser");
-		if (!"admin".equals(loggedInUser.getRole())) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied. Admin only.");
-			return;
-		}
 
 		String format = request.getParameter("format");
 		String search = request.getParameter("search");
@@ -98,7 +86,7 @@ public class AdminPropertyController extends HttpServlet {
 			json.append("\"bedrooms\":").append(p.getBedrooms()).append(",");
 			json.append("\"propertyType\":\"").append(escapeJson(p.getPropertyType())).append("\",");
 			json.append("\"status\":\"").append(escapeJson(p.getStatus())).append("\",");
-			json.append("\"createdAt\":\"").append(escapeJson(p.getCreatedAt())).append("\"");
+			json.append("\"createdAt\":\"").append(escapeJson(String.valueOf(p.getCreatedAt()))).append("\"");
 			json.append("}");
 			if (i < properties.size() - 1)
 				json.append(",");

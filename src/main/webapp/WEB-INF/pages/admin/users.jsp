@@ -112,21 +112,7 @@ th[data-sort]:hover .sort-indicator .material-symbols-outlined {
 
 	<!-- MAIN CONTENT -->
 	<main class="main-content">
-		<div class="top-bar">
-			<div class="search-wrapper">
-				<span class="material-symbols-outlined">search</span> <input
-					type="text" placeholder="Search system-wide...">
-			</div>
-			<div class="admin-badge">
-				<button class="icon-btn">
-					<span class="material-symbols-outlined">notifications_none</span>
-				</button>
-				<button class="icon-btn">
-					<span class="material-symbols-outlined">settings</span>
-				</button>
-				<div class="admin-name">Admin</div>
-			</div>
-		</div>
+		<jsp:include page="/WEB-INF/includes/topbar.jsp" />
 
 		<div class="dashboard-container">
 			<!-- Alert Messages -->
