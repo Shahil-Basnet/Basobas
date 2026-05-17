@@ -35,6 +35,7 @@ public class LandlordPropertyController extends HttpServlet {
 
 	private PropertyDAO propertyDAO;
 	private PropertyPhotoDAO photoDAO;
+	private static final String UPLOAD_BASE_DIR = System.getProperty("user.home") + "/Basobas_uploads/";
 
 	@Override
 	public void init() throws ServletException {
@@ -407,6 +408,15 @@ public class LandlordPropertyController extends HttpServlet {
 		System.out.println("=== PHOTO UPLOAD DEBUG ===");
 		System.out.println("Property ID: " + propertyId);
 
+		String primaryIndexStr = request.getParameter("primaryPhotoIndex");
+		int primaryIndex = -1;
+		try {
+			if (primaryIndexStr != null) {
+				primaryIndex = Integer.parseInt(primaryIndexStr);
+			}
+		} catch (NumberFormatException e) {
+		}
+
 		Collection<Part> parts = request.getParts();
 		System.out.println("Total parts found: " + parts.size());
 
@@ -414,43 +424,54 @@ public class LandlordPropertyController extends HttpServlet {
 		System.out.println("Existing photos count: " + order);
 
 		int currentOrder = order;
+		int photoPartIndex = 0;
+
+		// Use PERMANENT directory outside Tomcat
+		String uploadPath = UPLOAD_BASE_DIR + "properties/";
+		File uploadDir = new File(uploadPath);
+		if (!uploadDir.exists()) {
+			uploadDir.mkdirs();
+		}
+		System.out.println("Upload path: " + uploadPath);
 
 		for (Part part : parts) {
 			String partName = part.getName();
 			String fileName = getSubmittedFileName(part);
 			long fileSize = part.getSize();
 
-			System.out.println("Part: name='" + partName + "', fileName='" + fileName + "', size=" + fileSize);
-
 			// Check if this is a file part with name "photos"
 			if ("photos".equals(partName) && fileName != null && !fileName.isEmpty() && fileSize > 0) {
-				System.out.println("Processing photo: " + fileName);
+				System.out.println("Processing photo: " + fileName + " at index " + photoPartIndex);
 
 				String extension = fileName.substring(fileName.lastIndexOf("."));
 				String newFileName = "PR" + String.format("%05d", propertyId) + "_" + System.currentTimeMillis()
 						+ extension;
 
-				String uploadPath = getServletContext().getRealPath("") + "/uploads/properties/";
-				System.out.println("Upload path: " + uploadPath);
+				part.write(uploadPath + newFileName);
+				System.out.println("Saved to: " + uploadPath + newFileName);
 
-				File uploadDir = new File(uploadPath);
-				if (!uploadDir.exists()) {
-					boolean created = uploadDir.mkdirs();
-					System.out.println("Created directory: " + created);
+				// Store only filename in DB - helper methods handle the prefixing
+				String dbPath = newFileName;
+
+				// Determine if this photo should be primary
+				boolean isPrimary = false;
+				if (primaryIndex != -1) {
+					isPrimary = (photoPartIndex == primaryIndex);
+				} else {
+					isPrimary = (currentOrder == 0);
 				}
 
-				String fullPath = uploadPath + newFileName;
-				System.out.println("Saving to: " + fullPath);
-				part.write(fullPath);
+				// If we are setting a new primary, unset others
+				if (isPrimary) {
+					photoDAO.setPrimaryPhoto(propertyId, -1);
+				}
 
-				String dbPath = "/uploads/properties/" + newFileName;
-				boolean isPrimary = (currentOrder == 0); // First photo becomes primary
 				PropertyPhoto photo = new PropertyPhoto(propertyId, dbPath, isPrimary, currentOrder);
-
-				boolean saved = photoDAO.save(photo);
-				System.out.println("Photo saved to DB: " + saved);
+				photoDAO.save(photo);
+				System.out.println("Photo saved to DB with isPrimary: " + isPrimary);
 
 				currentOrder++;
+				photoPartIndex++;
 			}
 		}
 		System.out.println("=== PHOTO UPLOAD DEBUG END ===");
@@ -471,9 +492,14 @@ public class LandlordPropertyController extends HttpServlet {
 		if (photo != null) {
 			Property property = propertyDAO.findById(photo.getPropertyId());
 			if (property != null && property.getLandlordId() == currentUser.getUserId()) {
-				// Delete file from disk
-				String filePath = getServletContext().getRealPath("") + photo.getPhotoUrl();
-				new File(filePath).delete();
+				// Delete file from PERMANENT disk location
+				String filename = photo.getPhotoUrl().replace("/property-photo/", "");
+				String filePath = UPLOAD_BASE_DIR + "properties/" + filename;
+				File file = new File(filePath);
+				if (file.exists()) {
+					file.delete();
+					System.out.println("Deleted file: " + filePath);
+				}
 
 				// Delete from database
 				photoDAO.delete(photoId);
@@ -486,6 +512,18 @@ public class LandlordPropertyController extends HttpServlet {
 
 		response.setContentType("application/json");
 		response.getWriter().write("{\"success\": false}");
+	}
+
+	private void deletePhotoFiles(List<PropertyPhoto> photos) {
+		for (PropertyPhoto photo : photos) {
+			String filename = photo.getPhotoUrl().replace("/property-photo/", "");
+			String filePath = UPLOAD_BASE_DIR + "properties/" + filename;
+			File file = new File(filePath);
+			if (file.exists()) {
+				file.delete();
+				System.out.println("Deleted file during property delete: " + filePath);
+			}
+		}
 	}
 
 	private void handleSetPrimaryPhoto(HttpServletRequest request, HttpServletResponse response, User currentUser)
@@ -512,16 +550,6 @@ public class LandlordPropertyController extends HttpServlet {
 
 		response.setContentType("application/json");
 		response.getWriter().write("{\"success\": false}");
-	}
-
-	private void deletePhotoFiles(List<PropertyPhoto> photos) {
-		for (PropertyPhoto photo : photos) {
-			String filePath = getServletContext().getRealPath("") + photo.getPhotoUrl();
-			File file = new File(filePath);
-			if (file.exists()) {
-				file.delete();
-			}
-		}
 	}
 
 	// ========== HELPER METHODS ==========

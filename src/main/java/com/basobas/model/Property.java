@@ -30,6 +30,7 @@ public class Property {
 	private Integer currentTenantId;
 	private LocalDate currentLeaseStart;
 	private LocalDate currentLeaseEnd;
+	private String primaryPhotoUrl;
 
 	// Constructors
 	public Property() {
@@ -255,6 +256,14 @@ public class Property {
 	// Helper method to get formatted rent with NPR
 	public String getFormattedRent() {
 		return "रू " + String.format("%,.2f", monthlyRent);
+	}
+
+	public String getPrimaryPhotoUrl() {
+		return primaryPhotoUrl;
+	}
+
+	public void setPrimaryPhotoUrl(String primaryPhotoUrl) {
+		this.primaryPhotoUrl = primaryPhotoUrl;
 	}
 
 	// Helper method to get full address with ward

@@ -160,10 +160,21 @@ public class PropertyPhotoDAO {
     
     /**
      * Get primary photo URL for a property (convenience method for JSP)
+     * If no primary photo is set, it will return the first available photo.
+     * If no photos at all, returns the default no-image path.
      */
     public String getPrimaryPhotoUrl(int propertyId) {
         PropertyPhoto photo = getPrimaryPhoto(propertyId);
-        return photo != null ? photo.getFullPhotoUrl() : "/assets/images/no-image.jpg";
+        
+        // If no primary photo, try to get the first photo
+        if (photo == null) {
+            List<PropertyPhoto> photos = getPhotosByPropertyId(propertyId);
+            if (!photos.isEmpty()) {
+                photo = photos.get(0);
+            }
+        }
+        
+        return photo != null ? photo.getFullPhotoUrl() : "/assets/no-image.jpg";
     }
     
     /**

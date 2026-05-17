@@ -93,9 +93,21 @@ public class AuthFilter implements Filter {
 	}
 
 	private boolean isPublicPath(String path) {
-		return path.equals("/") || path.equals("/login") || path.equals("/register") || path.startsWith("/css/")
-				|| path.startsWith("/js/") || path.startsWith("/images/") || path.startsWith("/assets/")
-				|| path.startsWith("/uploads/") || path.equals("/logout");
+	    return path.equals("/") ||
+	           path.equals("/index") ||
+	           path.equals("/login") ||
+	           path.equals("/register") ||
+	           path.equals("/properties") ||
+	           path.equals("/property") ||
+	           path.equals("/about") ||
+	           path.equals("/contact") ||
+	           path.startsWith("/css/") ||
+	           path.startsWith("/js/") ||
+	           path.startsWith("/images/") ||
+	           path.startsWith("/assets/") ||
+	           path.startsWith("/uploads/") ||
+	           path.startsWith("/property-photo/") ||  // For images
+	           path.equals("/logout");
 	}
 
 	@Override

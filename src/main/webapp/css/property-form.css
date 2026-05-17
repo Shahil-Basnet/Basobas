@@ -1,0 +1,283 @@
+/* property-form.css - Styles for Add/Edit Property Forms */
+
+.form-section {
+	margin-bottom: 2rem;
+}
+
+.form-section-title {
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--on-surface);
+	margin-bottom: 1.25rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 2px solid var(--outline-variant);
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.form-section-title .material-symbols-outlined {
+	color: var(--primary);
+	font-size: 1.25rem;
+}
+
+.form-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 1.25rem;
+	margin-bottom: 1.25rem;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.form-label {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--on-surface-variant);
+}
+
+.form-label .required {
+	color: var(--error);
+	margin-left: 0.25rem;
+}
+
+.form-hint {
+	font-size: 0.7rem;
+	color: var(--outline);
+	margin-top: 0.25rem;
+}
+
+/* Photo Preview Styles */
+.photo-preview {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.photo-preview-item {
+	position: relative;
+	width: 120px;
+	height: 120px;
+	border-radius: 0.75rem;
+	overflow: hidden;
+	border: 1px solid var(--outline-variant);
+	background: var(--surface-container-low);
+	transition: all 0.2s;
+}
+
+.photo-preview-item.primary {
+	border: 3px solid var(--primary);
+	box-shadow: 0 0 0 4px rgba(43, 110, 60, 0.1);
+}
+
+.photo-preview-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.photo-preview-item .remove-photo {
+	position: absolute;
+	top: 0.35rem;
+	right: 0.35rem;
+	background: rgba(186, 26, 26, 0.9);
+	color: white;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-size: 1rem;
+	z-index: 10;
+	transition: transform 0.2s;
+}
+
+.photo-preview-item .remove-photo:hover {
+	transform: scale(1.1);
+	background: var(--error);
+}
+
+.photo-preview-item .set-primary-overlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	font-size: 0.65rem;
+	font-weight: 700;
+	padding: 0.35rem;
+	text-align: center;
+	cursor: pointer;
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+
+.photo-preview-item:hover .set-primary-overlay {
+	opacity: 1;
+}
+
+.photo-preview-item.primary .set-primary-overlay {
+	background: var(--primary);
+	opacity: 1;
+}
+
+.photo-preview-item .primary-star {
+	position: absolute;
+	top: 0.35rem;
+	left: 0.35rem;
+	color: #f59e0b;
+	background: white;
+	border-radius: 50%;
+	padding: 2px;
+	display: none;
+}
+
+.photo-preview-item.primary .primary-star {
+	display: block;
+}
+
+.file-input-wrapper {
+	position: relative;
+	display: inline-block;
+}
+
+.file-input-wrapper input[type="file"] {
+	position: absolute;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+.btn-outline {
+	background: transparent;
+	border: 1px solid var(--outline-variant);
+	color: var(--on-surface-variant);
+	padding: 0.625rem 1.25rem;
+	border-radius: 0.5rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.btn-outline:hover {
+	background: var(--surface-container);
+	border-color: var(--primary);
+}
+
+.form-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	margin-top: 2rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid var(--outline-variant);
+}
+
+/* Photo Gallery (Edit Page) */
+.photo-gallery {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.photo-card {
+	position: relative;
+	width: 150px;
+	border-radius: 0.75rem;
+	overflow: hidden;
+	border: 1px solid var(--outline-variant);
+	background: var(--surface-container-low);
+}
+
+.photo-card img {
+	width: 100%;
+	height: 120px;
+	object-fit: cover;
+}
+
+.photo-card .primary-badge {
+	position: absolute;
+	top: 0.5rem;
+	left: 0.5rem;
+	background: var(--primary);
+	color: white;
+	font-size: 0.7rem;
+	font-weight: 700;
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.25rem;
+}
+
+.photo-card .photo-actions {
+	display: flex;
+	justify-content: space-between;
+	padding: 0.5rem;
+	border-top: 1px solid var(--outline-variant);
+}
+
+.photo-card .photo-actions button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0.25rem;
+	border-radius: 0.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background 0.2s;
+}
+
+.photo-card .photo-actions .set-primary {
+	color: var(--primary);
+}
+
+.photo-card .photo-actions .set-primary:hover {
+	background: rgba(51, 79, 43, 0.1);
+}
+
+.photo-card .photo-actions .delete-photo {
+	color: var(--error);
+}
+
+.photo-card .photo-actions .delete-photo:hover {
+	background: rgba(186, 26, 26, 0.1);
+}
+
+/* Error Styling */
+.estate-input.error {
+	border-color: var(--error);
+	background-color: rgba(186, 26, 26, 0.05);
+}
+
+.estate-input.error:focus {
+	border-color: var(--error);
+	box-shadow: 0 0 0 2px rgba(186, 26, 26, 0.1);
+}
+
+.form-error {
+	color: var(--error);
+	font-size: 0.7rem;
+	margin-top: 0.25rem;
+}
+
+@media ( max-width : 768px) {
+	.form-row {
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+	.photo-card {
+		width: calc(50% - 0.5rem);
+	}
+}

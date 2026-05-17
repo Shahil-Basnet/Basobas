@@ -86,10 +86,17 @@ public class PropertyPhoto {
 
 	// Helper method to get full URL for JSP
 	public String getFullPhotoUrl() {
-		if (photoUrl != null && photoUrl.startsWith("/")) {
-			return photoUrl;
-		}
-		return "/uploads/properties/" + photoUrl;
+	    if (photoUrl == null || photoUrl.isEmpty()) {
+	        return "/assets/no-image.jpg";
+	    }
+	    
+	    // If it's already a full path starting with /property-photo/
+	    if (photoUrl.startsWith("/property-photo/")) {
+	        return photoUrl;
+	    }
+	    
+	    // Return the URL that PropertyPhotoServlet expects
+	    return "/property-photo/" + photoUrl;
 	}
 
 	@Override
