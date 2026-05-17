@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
+<%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +17,6 @@
 .icon-error::before {
 	content: "⚠️";
 }
-
 </style>
 </head>
 <body>
@@ -43,30 +44,34 @@
 
 			<!-- Display error message if exists -->
 			<%
-				String error = (String) request.getAttribute("error");
-				if (error != null && !error.isEmpty()) {
+			String error = (String) request.getAttribute("error");
+			if (error != null && !error.isEmpty()) {
 			%>
-				<div class="error-alert" style="background-color: #fee2e2; color: #dc2626; padding: 12px; border-radius: 8px; margin-bottom: 20px;">
-					<span class="error-icon">⚠️</span>
-					<p class="error-text" style="margin: 0; display: inline-block;"><%= error %></p>
-				</div>
+			<div class="error-alert"
+				style="background-color: #fee2e2; color: #dc2626; padding: 12px; border-radius: 8px; margin-bottom: 20px;">
+				<span class="error-icon">⚠️</span>
+				<p class="error-text" style="margin: 0; display: inline-block;"><%=error%></p>
+			</div>
 			<%
-				}
+			}
 			%>
 
-			<form class="space-y-6" action="${pageContext.request.contextPath}/login" method="post">
+			<form class="space-y-6"
+				action="${pageContext.request.contextPath}/login" method="post">
 				<!-- Username Field -->
 				<div class="input-group">
-					<label class="form-label" for="username">Username</label> 
+					<label class="form-label" for="username">Username or Email</label>
 					<input class="estate-input" id="username" name="username"
-						placeholder="Enter your username" type="text" required />
+						placeholder="Enter your username or email" type="text" required />
 				</div>
 
 				<!-- Password Field -->
 				<div class="input-group">
 					<div class="flex justify-between items-center">
-						<label class="form-label" for="password">Password</label> 
-						<a class="text-xs font-semibold text-primary hover:underline" href="#">Forgot password?</a>
+						<label class="form-label" for="password">Password</label> <a
+							class="text-xs font-semibold text-primary hover:underline"
+							href="${pageContext.request.contextPath}/forgot-password">Forgot
+							password?</a>
 					</div>
 					<div class="password-wrapper">
 						<input class="estate-input w-full" id="password" name="password"
@@ -96,9 +101,9 @@
 			<p class="text-sm text-on-surface-variant">© 2026 Basobas Estate
 				Management. All rights reserved.</p>
 			<nav class="flex gap-6">
-				<a class="footer-link" href="#">Privacy Policy</a> 
-				<a class="footer-link" href="#">Terms of Service</a> 
-				<a class="footer-link" href="#">Contact Support</a>
+				<a class="footer-link" href="#">Privacy Policy</a> <a
+					class="footer-link" href="#">Terms of Service</a> <a
+					class="footer-link" href="#">Contact Support</a>
 			</nav>
 		</div>
 	</footer>

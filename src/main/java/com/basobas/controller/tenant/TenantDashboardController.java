@@ -40,16 +40,7 @@ public class TenantDashboardController extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession(false);
-		if (session == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-			return;
-		}
-
 		User currentUser = (User) session.getAttribute("loggedInUser");
-		if (currentUser == null || !"tenant".equals(currentUser.getRole())) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied. Tenants only.");
-			return;
-		}
 
 		String path = request.getPathInfo();
 

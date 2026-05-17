@@ -107,6 +107,8 @@ public class AuthFilter implements Filter {
 	           path.startsWith("/assets/") ||
 	           path.startsWith("/uploads/") ||
 	           path.startsWith("/property-photo/") ||  // For images
+	           path.equals("/forgot-password") ||      
+	           path.equals("/reset-password") ||
 	           path.equals("/logout");
 	}
 

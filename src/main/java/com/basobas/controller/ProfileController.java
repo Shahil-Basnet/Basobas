@@ -31,17 +31,7 @@ public class ProfileController extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession(false);
-		if (session == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-			return;
-		}
-
 		User currentUser = (User) session.getAttribute("loggedInUser");
-		if (currentUser == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-			return;
-		}
-
 		// Get fresh user data from database
 		User user = userDAO.findById(currentUser.getUserId());
 

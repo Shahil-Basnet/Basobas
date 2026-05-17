@@ -131,26 +131,25 @@ public class UserDAO {
 
 	// Partial search by username, email, or full name
 	public List<User> searchUsers(String keyword) {
-	    List<User> users = new ArrayList<>();
-	    String sql = "SELECT * FROM users WHERE username LIKE ? OR email LIKE ? OR full_name LIKE ? ORDER BY user_id DESC";
+		List<User> users = new ArrayList<>();
+		String sql = "SELECT * FROM users WHERE username LIKE ? OR email LIKE ? OR full_name LIKE ? ORDER BY user_id DESC";
 
-	    try (Connection conn = DatabaseConfig.getConnection(); 
-	         PreparedStatement ps = conn.prepareStatement(sql)) {
+		try (Connection conn = DatabaseConfig.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-	        String searchPattern = "%" + keyword + "%";
-	        ps.setString(1, searchPattern);
-	        ps.setString(2, searchPattern);
-	        ps.setString(3, searchPattern);
-	        ResultSet rs = ps.executeQuery();
+			String searchPattern = "%" + keyword + "%";
+			ps.setString(1, searchPattern);
+			ps.setString(2, searchPattern);
+			ps.setString(3, searchPattern);
+			ResultSet rs = ps.executeQuery();
 
-	        while (rs.next()) {
-	            users.add(extractUserFromResultSet(rs));
-	        }
+			while (rs.next()) {
+				users.add(extractUserFromResultSet(rs));
+			}
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return users;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return users;
 	}
 
 	// Get all users (for admin overview)
@@ -241,6 +240,26 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	// Find by username or email
+	public User findByUsernameOrEmail(String identifier) {
+		String sql = "SELECT * FROM users WHERE username = ? OR email = ?";
+
+		try (Connection conn = DatabaseConfig.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+			ps.setString(1, identifier);
+			ps.setString(2, identifier);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return extractUserFromResultSet(rs);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	// Get users with filters and pagination
@@ -440,7 +459,7 @@ public class UserDAO {
 	}
 
 	// Helper method to extract User from ResultSet
-	private User extractUserFromResultSet(ResultSet rs) throws Exception {
+	private User extractUserFromResultSet(ResultSet rs) throws SQLException {
 		User user = new User();
 		user.setUserId(rs.getInt("user_id"));
 		user.setDisplayId(rs.getString("display_id"));

@@ -36,22 +36,13 @@ public class PaymentController extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession(false);
-		if (session == null) {
-			response.sendRedirect(request.getContextPath() + "/login");
-			return;
-		}
-
 		User currentUser = (User) session.getAttribute("loggedInUser");
-		if (currentUser == null || !"tenant".equals(currentUser.getRole())) {
-			response.sendError(HttpServletResponse.SC_FORBIDDEN);
-			return;
-		}
 
 		String path = request.getPathInfo();
 
 		if (path == null || path.equals("/") || path.equals("/list")) {
 			showPayments(request, response, currentUser);
-		} else if (path.equals("/make")) {
+		} else if (path.equals("/make" ) || path.equals("/submit")) {
 			showMakePaymentForm(request, response, currentUser);
 		} else {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -82,7 +73,7 @@ public class PaymentController extends HttpServlet {
 			return;
 		}
 
-		if (path.equals("/make")) {
+		if (path.equals("/make") || path.equals("/submit")) {
 			submitPayment(request, response, currentUser);
 		} else {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -124,6 +115,7 @@ public class PaymentController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 
 		try {
+			// Use getParameter for FormData - MUCH simpler!
 			String propertyIdStr = request.getParameter("propertyId");
 			String amountStr = request.getParameter("amount");
 			String paymentMonthStr = request.getParameter("paymentMonth");
@@ -196,4 +188,5 @@ public class PaymentController extends HttpServlet {
 			response.getWriter().write("{\"success\": false, \"message\": \"Error: " + e.getMessage() + "\"}");
 		}
 	}
+
 }

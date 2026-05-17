@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn"%>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en" data-context-path="${pageContext.request.contextPath}">
 <head>
@@ -43,17 +44,17 @@
 					one place.</p>
 			</div>
 
-			<!-- Stats Cards -->
+			<!-- Stats Cards with Real Data -->
 			<div class="stats-grid">
 				<div class="stat-card">
 					<div class="stat-icon">
 						<span class="material-symbols-outlined">groups</span>
 					</div>
 					<h4>Total Users</h4>
-					<div class="stat-number">1,284</div>
+					<div class="stat-number">${totalUsers}</div>
 					<div class="stat-trend">
-						<span class="material-symbols-outlined" style="font-size: 1rem;">trending_up</span>
-						+12% vs last month
+						<span class="material-symbols-outlined" style="font-size: 1rem;">person</span>
+						Registered users
 					</div>
 				</div>
 				<div class="stat-card">
@@ -61,21 +62,21 @@
 						<span class="material-symbols-outlined">apartment</span>
 					</div>
 					<h4>Properties</h4>
-					<div class="stat-number">452</div>
+					<div class="stat-number">${totalProperties}</div>
 					<div class="stat-trend">
 						<span class="material-symbols-outlined" style="font-size: 1rem;">location_city</span>
-						14 regions
+						Total listings
 					</div>
 				</div>
 				<div class="stat-card">
 					<div class="stat-icon">
 						<span class="material-symbols-outlined">description</span>
 					</div>
-					<h4>Active Leases</h4>
-					<div class="stat-number">398</div>
+					<h4>Occupied Properties</h4>
+					<div class="stat-number">${occupiedProperties}</div>
 					<div class="stat-trend">
 						<span class="material-symbols-outlined" style="font-size: 1rem;">verified</span>
-						88% occupied
+						${occupancyRate}% occupied
 					</div>
 				</div>
 				<div class="stat-card">
@@ -83,10 +84,10 @@
 						<span class="material-symbols-outlined">pending_actions</span>
 					</div>
 					<h4>Pending Requests</h4>
-					<div class="stat-number">27</div>
+					<div class="stat-number">${pendingRequests}</div>
 					<div class="stat-trend">
 						<span class="material-symbols-outlined" style="font-size: 1rem;">schedule</span>
-						5 urgent
+						Awaiting response
 					</div>
 				</div>
 			</div>
@@ -97,52 +98,63 @@
 				<div class="dashboard-card">
 					<div class="card-header">
 						<h3>Recent Properties</h3>
-						<span class="badge-last">Last 5</span>
+						<span class="badge-last">Last
+							${fn:length(recentProperties)}</span>
 					</div>
 					<div style="overflow-x: auto;">
 						<table class="data-table">
 							<thead>
 								<tr>
-									<th>ID</th>
+									<th>Property ID</th>
 									<th>Title</th>
 									<th>Landlord</th>
 									<th>City</th>
 									<th>Monthly Rent</th>
+									<th>Status</th>
 									<th>Added On</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td class="text-muted">123</td>
-									<td class="font-bold">Sunny Apt</td>
-									<td>John D.</td>
-									<td>Miami</td>
-									<td class="text-primary font-bold">$1,200</td>
-									<td>2025-04-15</td>
-								</tr>
-								<tr>
-									<td class="text-muted">124</td>
-									<td class="font-bold">Downtown Loft</td>
-									<td>Jane S.</td>
-									<td>Chicago</td>
-									<td class="text-primary font-bold">$1,800</td>
-									<td>2025-04-14</td>
-								</tr>
-								<tr>
-									<td class="text-muted">125</td>
-									<td class="font-bold">Greenfield House</td>
-									<td>Robert L.</td>
-									<td>Austin</td>
-									<td class="text-primary font-bold">$2,100</td>
-									<td>2025-04-12</td>
-								</tr>
+								<c:forEach var="property" items="${recentProperties}">
+									<tr>
+										<td class="text-muted">${property.displayId}</td>
+										<td class="font-bold">${fn:escapeXml(property.title)}</td>
+										<td>${fn:escapeXml(property.landlordName)}</td>
+										<td>${fn:escapeXml(property.city)}</td>
+										<td class="text-primary font-bold">रू <fmt:formatNumber
+												value="${property.monthlyRent}" groupingUsed="true" /></td>
+										<td><c:choose>
+												<c:when test="${property.status == 'available'}">
+													<span
+														style="background: #d1fae5; color: #059669; padding: 2px 10px; border-radius: 30px; font-size: 0.7rem;">Available</span>
+												</c:when>
+												<c:when test="${property.status == 'rented'}">
+													<span
+														style="background: #fee2e2; color: #dc2626; padding: 2px 10px; border-radius: 30px; font-size: 0.7rem;">Rented</span>
+												</c:when>
+												<c:otherwise>
+													<span
+														style="background: #f3f4f6; color: #6b7280; padding: 2px 10px; border-radius: 30px; font-size: 0.7rem;">${property.status}</span>
+												</c:otherwise>
+											</c:choose></td>
+										<td class="text-muted">${property.createdAt}</td>
+									</tr>
+								</c:forEach>
+								<c:if test="${empty recentProperties}">
+									<tr>
+										<td colspan="7" style="text-align: center; padding: 2rem;">No
+											properties found</td>
+									</tr>
+								</c:if>
 							</tbody>
 						</table>
 					</div>
 					<div class="card-header"
 						style="border-top: 1px solid #eef2f0; border-bottom: none;">
-						<a href="#" class="link-arrow">View All Properties <span
-							class="material-symbols-outlined" style="font-size: 1rem;">arrow_forward</span></a>
+						<a href="${pageContext.request.contextPath}/admin/properties"
+							class="link-arrow">View All Properties <span
+							class="material-symbols-outlined" style="font-size: 1rem;">arrow_forward</span>
+						</a>
 					</div>
 				</div>
 
@@ -150,14 +162,14 @@
 				<div class="grid-2cols">
 					<div class="dashboard-card">
 						<div class="card-header">
-							<h3>Pending Rental Requests</h3>
-							<span class="badge-last">Needs Landlord Action</span>
+							<h3>Recent Rental Requests</h3>
+							<span class="badge-last">Latest</span>
 						</div>
 						<div style="overflow-x: auto;">
 							<table class="data-table">
 								<thead>
 									<tr>
-										<th>ID</th>
+										<th>Request ID</th>
 										<th>Property</th>
 										<th>Tenant</th>
 										<th>Request Date</th>
@@ -165,58 +177,82 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>R01</td>
-										<td class="font-bold">Sunny Apt</td>
-										<td>Mike T.</td>
-										<td>2025-04-15</td>
-										<td><span
-											style="background: #fff3e0; color: #b45f06; padding: 2px 10px; border-radius: 30px;">Pending</span></td>
-									</tr>
-									<tr>
-										<td>R02</td>
-										<td class="font-bold">Green House</td>
-										<td>Sarah K.</td>
-										<td>2025-04-14</td>
-										<td><span
-											style="background: #fff3e0; color: #b45f06; padding: 2px 10px; border-radius: 30px;">Pending</span></td>
-									</tr>
+									<c:forEach var="request" items="${recentRequests}">
+										<tr>
+											<td class="text-muted">${request.displayId}</td>
+											<td class="font-bold">${fn:escapeXml(request.propertyTitle)}</td>
+											<td>${fn:escapeXml(request.tenantName)}</td>
+											<td class="text-muted">${request.createdAt}</td>
+											<td><c:choose>
+													<c:when test="${request.status == 'pending'}">
+														<span
+															style="background: #fff3e0; color: #b45f06; padding: 2px 10px; border-radius: 30px; font-size: 0.7rem;">Pending</span>
+													</c:when>
+													<c:when test="${request.status == 'approved'}">
+														<span
+															style="background: #d1fae5; color: #059669; padding: 2px 10px; border-radius: 30px; font-size: 0.7rem;">Approved</span>
+													</c:when>
+													<c:when test="${request.status == 'rejected'}">
+														<span
+															style="background: #fee2e2; color: #dc2626; padding: 2px 10px; border-radius: 30px; font-size: 0.7rem;">Rejected</span>
+													</c:when>
+													<c:otherwise>
+														<span
+															style="background: #f3f4f6; color: #6b7280; padding: 2px 10px; border-radius: 30px; font-size: 0.7rem;">${request.status}</span>
+													</c:otherwise>
+												</c:choose></td>
+										</tr>
+									</c:forEach>
+									<c:if test="${empty recentRequests}">
+										<tr>
+											<td colspan="5" style="text-align: center; padding: 2rem;">No
+												rental requests found</td>
+										</tr>
+									</c:if>
 								</tbody>
 							</table>
 						</div>
 						<div class="card-header"
 							style="border-top: 1px solid #eef2f0; border-bottom: none;">
 							<a href="#" class="link-arrow">View All Requests <span
-								class="material-symbols-outlined" style="font-size: 1rem;">arrow_forward</span></a>
+								class="material-symbols-outlined" style="font-size: 1rem;">arrow_forward</span>
+							</a>
 						</div>
 					</div>
 
 					<div class="dashboard-card">
 						<div class="card-header">
-							<h3>Recent Activity Feed</h3>
+							<h3>Quick Stats</h3>
 						</div>
 						<div class="activity-feed">
 							<div class="feed-item">
 								<div class="feed-dot"></div>
 								<div class="feed-title">
-									New user registered: <strong>john_doe</strong> (Tenant)
+									Total Users: <strong>${totalUsers}</strong>
 								</div>
-								<div class="feed-time">2 minutes ago</div>
+								<div class="feed-time">Across all roles</div>
 							</div>
 							<div class="feed-item">
 								<div class="feed-dot secondary"></div>
 								<div class="feed-title">
-									Property listed: <strong>Beach Apartment</strong> by
-									jane_landlord
+									Total Properties: <strong>${totalProperties}</strong>
 								</div>
-								<div class="feed-time">1 hour ago</div>
+								<div class="feed-time">Listed on platform</div>
 							</div>
 							<div class="feed-item">
 								<div class="feed-dot warning"></div>
 								<div class="feed-title">
-									Maintenance request: <strong>Leaking pipe</strong> (Urgent)
+									Occupancy Rate: <strong>${occupancyRate}%</strong>
 								</div>
-								<div class="feed-time">5 hours ago</div>
+								<div class="feed-time">${occupiedProperties}out of
+									${totalProperties} properties rented</div>
+							</div>
+							<div class="feed-item">
+								<div class="feed-dot error"></div>
+								<div class="feed-title">
+									Available Properties: <strong>${totalProperties - occupiedProperties}</strong>
+								</div>
+								<div class="feed-time">Ready for rent</div>
 							</div>
 						</div>
 					</div>

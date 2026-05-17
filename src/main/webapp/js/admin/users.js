@@ -18,7 +18,7 @@ async function fetchUsers() {
         page: currentPage,
         sortBy: sortBy,
         sortOrder: sortOrder,
-        limit: 5   // ← ADD THIS LINE
+        limit: 5
     });
     if (searchInput.value.trim()) params.set('search', searchInput.value.trim());
     if (roleFilter.value !== 'all') params.set('role', roleFilter.value);
@@ -258,50 +258,69 @@ document.getElementById('createUserForm')?.addEventListener('submit', async (e) 
         return;
     }
 
-    if (password.length < 4) {
-        showToast('Password must be at least 4 characters', 'warning');
+    if (password.length < 6) {
+        showToast('Password must be at least 6 characters', 'warning');
         return;
     }
 
-    // Check if email is valid
-    if (!isValidEmail(email)) {
+    // Username validation
+    const usernamePattern = /^[A-Za-z][A-Za-z0-9_]{3,19}$/;
+    if (!usernamePattern.test(username)) {
+        showToast('Username must start with a letter and contain only letters, numbers, and underscores (4-20 characters)', 'error');
+        return;
+    }
+
+    // Email validation
+    const emailPattern = /^[A-Za-z0-9+_.-]+@(.+)$/;
+    if (!emailPattern.test(email)) {
         showToast('Please enter a valid email address', 'error');
         return;
     }
 
-    // Submit to server
+    // Disable submit button
+    const submitBtn = document.querySelector('#createUserForm .btn-primary');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Creating...';
+
+    // Create URLSearchParams (application/x-www-form-urlencoded)
+    const params = new URLSearchParams();
+    params.append('action', 'create');
+    params.append('fullName', fullName);
+    params.append('username', username);
+    params.append('email', email);
+    params.append('phone', phone);
+    params.append('role', role);
+    params.append('dateOfBirth', dateOfBirth);
+    params.append('address', address);
+    params.append('password', password);
+
     try {
         const response = await fetch(contextPath + '/admin/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: new URLSearchParams({
-                action: 'create',
-                fullName: fullName,
-                username: username,
-                email: email,
-                phone: phone,
-                role: role,
-                dateOfBirth: dateOfBirth,
-                address: address,
-                password: password
-            })
+            body: params.toString()
         });
 
-        if (response.ok) {
-            console.log('User created successfully, showing toast now');
-            showToast('User created successfully!', 'success');
-            console.log('Toast should be visible now');
+        // Parse JSON response
+        const data = await response.json();
+
+        if (data.success) {
+            showToast(data.message, 'success');
             closeCreateUserModal();
             fetchUsers(); // Refresh the table
         } else {
-            const error = await response.text();
-            showToast(error || 'Error creating user', 'error');
+            showToast(data.message, 'error');
         }
+
     } catch (error) {
         console.error('Error:', error);
         showToast('Network error. Please try again.', 'error');
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
     }
 });
 

@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="material-symbols-outlined" style="animation: spin 1s linear infinite;">progress_activity</span> Processing...';
             
-            fetch(window.contextPath + '/tenant/payments/submit', {
+            fetch(window.contextPath + '/tenant/payments/make', {
                 method: 'POST',
                 body: formData
             })

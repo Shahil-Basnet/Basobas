@@ -117,52 +117,35 @@ public class AdminUserManagementController extends HttpServlet {
 				"\\t");
 	}
 
-	private void handleView(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Placeholder for view user
-		response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
-	}
-
-	private void handleEdit(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Placeholder for edit user
-		response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
-	}
-
-	private void handleCreate(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Placeholder for create user
-		response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String action = request.getParameter("action");
 
+		System.out.println("=== doPost called ===");
+		System.out.println("Action: " + action);
+
 		if ("delete".equals(action)) {
 			String displayId = request.getParameter("displayId");
-
-			// Find user by display_id first
 			User user = userDAO.findByDisplayId(displayId);
 			if (user != null && !"admin".equals(user.getRole())) {
-				// Don't allow deleting other admins
 				userDAO.delete(user.getUserId());
 			}
+			response.sendRedirect(request.getContextPath() + "/admin/users");
+
 		} else if ("resetPassword".equals(action)) {
 			String displayId = request.getParameter("displayId");
 			User user = userDAO.findByDisplayId(displayId);
 			if (user != null) {
-				// Reset to default password
 				String defaultPassword = "Basobas@123";
 				String hashedPassword = BCrypt.hashpw(defaultPassword, BCrypt.gensalt());
 				userDAO.changePassword(user.getUserId(), hashedPassword);
-
-				// Add success message to session to show on redirect
 				request.getSession().setAttribute("message",
 						"Password for " + user.getUsername() + " has been reset to: " + defaultPassword);
 				request.getSession().setAttribute("messageType", "success");
 			}
+			response.sendRedirect(request.getContextPath() + "/admin/users");
+
 		} else if ("bulkDelete".equals(action)) {
 			String[] displayIds = request.getParameterValues("displayIds");
 			if (displayIds != null) {
@@ -173,7 +156,13 @@ public class AdminUserManagementController extends HttpServlet {
 					}
 				}
 			}
+			response.sendRedirect(request.getContextPath() + "/admin/users");
+
 		} else if ("create".equals(action)) {
+			// Set response type to JSON
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+
 			String fullName = request.getParameter("fullName");
 			String username = request.getParameter("username");
 			String email = request.getParameter("email");
@@ -183,13 +172,35 @@ public class AdminUserManagementController extends HttpServlet {
 			String address = request.getParameter("address");
 			String password = request.getParameter("password");
 
-			// Check if username or email already exists
-			if (userDAO.findByUsername(username) != null) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Username already exists");
+			System.out.println("Create user - username: " + username + ", email: " + email);
+
+			// Validation
+			if (username == null || username.trim().isEmpty()) {
+				response.getWriter().write("{\"success\": false, \"message\": \"Username is required\"}");
 				return;
 			}
+
+			if (email == null || email.trim().isEmpty()) {
+				response.getWriter().write("{\"success\": false, \"message\": \"Email is required\"}");
+				return;
+			}
+
+			if (password == null || password.trim().isEmpty()) {
+				response.getWriter().write("{\"success\": false, \"message\": \"Password is required\"}");
+				return;
+			}
+
+			// Check if username already exists
+			if (userDAO.findByUsername(username) != null) {
+				System.out.println("Username already exists: " + username);
+				response.getWriter().write("{\"success\": false, \"message\": \"Username already exists\"}");
+				return;
+			}
+
+			// Check if email already exists
 			if (userDAO.findByEmail(email) != null) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Email already exists");
+				System.out.println("Email already exists: " + email);
+				response.getWriter().write("{\"success\": false, \"message\": \"Email already exists\"}");
 				return;
 			}
 
@@ -208,14 +219,17 @@ public class AdminUserManagementController extends HttpServlet {
 			newUser.setPassword(hashedPassword);
 
 			if (userDAO.save(newUser)) {
-				response.setStatus(HttpServletResponse.SC_OK);
-				response.getWriter().write("User created successfully");
+				System.out.println("User created successfully: " + username);
+				response.getWriter().write("{\"success\": true, \"message\": \"User created successfully\"}");
 			} else {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Failed to create user");
+				System.out.println("Failed to create user: " + username);
+				response.getWriter().write("{\"success\": false, \"message\": \"Failed to create user\"}");
 			}
-		}
+			return; // IMPORTANT: Don't redirect, just return
 
-		// Redirect back to the users list
-		response.sendRedirect(request.getContextPath() + "/admin/users");
+		} else {
+			System.out.println("Unknown action: " + action);
+			response.sendRedirect(request.getContextPath() + "/admin/users");
+		}
 	}
 }
